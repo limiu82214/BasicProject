@@ -19,5 +19,10 @@ func main() {
 		u.Name = "mike"
 		ctx.JSON(http.StatusOK, u)
 	})
+	r.GET("/user/2", func(ctx *gin.Context) {
+		u := db.NewUser()
+		u.Name = "joe"
+		ctx.JSON(http.StatusOK, u)
+	})
 	r.Run(":8080")
 }

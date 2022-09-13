@@ -33,12 +33,20 @@ func TestPinPong(t *testing.T) {
 
 // TestGetUser1 測試能否正確取得user1的資料
 func TestGetUser1(t *testing.T) {
-	resp, err := http.Get("http://localhost:8080/user/1")
-	assert.Nil(t, err)
-	defer resp.Body.Close()
-	assert.Equal(t, 200, resp.StatusCode)
+	url_expected := map[string]string{
+		"http://localhost:8080/user/1": `{"name":"mike"}`,
+		"http://localhost:8080/user/2": `{"name":"joe"}`,
+	}
 
-	body, err := ioutil.ReadAll(resp.Body)
-	assert.Nil(t, err)
-	assert.Equal(t, `{"name":"mike"}`, string(body))
+	for url, expected := range url_expected {
+		resp, err := http.Get(url)
+		assert.Nil(t, err)
+		defer resp.Body.Close()
+		assert.Equal(t, 200, resp.StatusCode)
+
+		body, err := ioutil.ReadAll(resp.Body)
+		assert.Nil(t, err)
+		assert.Equal(t, expected, string(body))
+	}
+
 }

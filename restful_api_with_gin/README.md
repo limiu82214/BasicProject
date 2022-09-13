@@ -12,8 +12,8 @@ github.com/limiu82214/GoBasicProject/restful_api_with_gin
 
 ## Version
 
-v0.0.1 => 實現了pin/pong呼叫
-v0.0.2 => 使用GET取回使用者資料 `/user/1`
+v0.0.1 => 實現了pin/pong呼叫  
+v0.0.2 => 使用GET取回使用者資料 `/user/1`  
 
 ## RESTful API
 
