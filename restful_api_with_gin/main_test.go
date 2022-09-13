@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TestPinPong 測試伺服器有無回應
 func TestPinPong(t *testing.T) {
 	resp, err := http.Get("http://localhost:8080/pin")
 	if err != nil {
@@ -28,4 +29,16 @@ func TestPinPong(t *testing.T) {
 	assert.Nil(t, err)
 	// fmt.Printf("message: %v\n", pong.Message)
 	assert.Equal(t, "pong", pong.Message)
+}
+
+// TestGetUser1 測試能否正確取得user1的資料
+func TestGetUser1(t *testing.T) {
+	resp, err := http.Get("http://localhost:8080/user/1")
+	assert.Nil(t, err)
+	defer resp.Body.Close()
+	assert.Equal(t, 200, resp.StatusCode)
+
+	body, err := ioutil.ReadAll(resp.Body)
+	assert.Nil(t, err)
+	assert.Equal(t, `{"name":"mike"}`, string(body))
 }
