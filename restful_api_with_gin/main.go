@@ -14,15 +14,24 @@ func main() {
 			"message": "pong",
 		})
 	})
-	r.GET("/user/1", func(ctx *gin.Context) {
+
+	r.GET("/user/:uid", func(ctx *gin.Context) {
 		u := db.NewUser()
-		u.Name = "mike"
-		ctx.JSON(http.StatusOK, u)
-	})
-	r.GET("/user/2", func(ctx *gin.Context) {
-		u := db.NewUser()
-		u.Name = "joe"
-		ctx.JSON(http.StatusOK, u)
+		isUIDExist := true
+		switch ctx.Param("uid") {
+		case "1":
+			u.Name = "mike"
+		case "2":
+			u.Name = "joe"
+		default:
+			isUIDExist = false
+		}
+		if !isUIDExist {
+			ctx.JSON(http.StatusOK, struct{}{})
+		} else {
+			ctx.JSON(http.StatusOK, u)
+
+		}
 	})
 	r.Run(":8080")
 }

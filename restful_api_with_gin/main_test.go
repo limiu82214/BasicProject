@@ -32,10 +32,11 @@ func TestPinPong(t *testing.T) {
 }
 
 // TestGetUser1 測試能否正確取得user1的資料
-func TestGetUser1(t *testing.T) {
+func TestGetUser(t *testing.T) {
 	url_expected := map[string]string{
 		"http://localhost:8080/user/1": `{"name":"mike"}`,
 		"http://localhost:8080/user/2": `{"name":"joe"}`,
+		"http://localhost:8080/user/0": `{}`,
 	}
 
 	for url, expected := range url_expected {
