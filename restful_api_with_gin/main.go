@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/db"
@@ -16,24 +17,19 @@ func main() {
 	})
 
 	r.GET("/user/:uid", func(ctx *gin.Context) {
-		u := db.NewUser()
-		isUIDExist := true
-		switch ctx.Param("uid") {
-		case "1":
-			u.Name = "mike" // 應在資料庫存取 *todo*
-		case "2":
-			u.Name = "joe"
-		default:
-			isUIDExist = false
+		suid := ctx.Param("uid")
+		uid, err := strconv.Atoi(suid)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, err)
 		}
-		if !isUIDExist {
-			ctx.JSON(http.StatusOK, struct{}{})
-		} else {
-			ctx.JSON(http.StatusOK, u)
-
+		u, err := db.GetUser(uid)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, err)
 		}
+		ctx.JSON(http.StatusOK, u)
 	})
 	r.POST("/user", func(ctx *gin.Context) {
+		// 應去資料庫新增 user *todo*
 		ctx.JSON(http.StatusCreated, struct{}{}) // 應返回新增user的sn *todo*
 	})
 
