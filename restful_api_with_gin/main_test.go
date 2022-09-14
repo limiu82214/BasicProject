@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -31,7 +32,7 @@ func TestPinPong(t *testing.T) {
 	assert.Equal(t, "pong", pong.Message)
 }
 
-// TestGetUser1 測試能否正確取得user1的資料
+// TestGetUser 測試能否正確取得user的資料
 func TestGetUser(t *testing.T) {
 	url_expected := map[string]string{
 		"http://localhost:8080/user/1": `{"name":"mike"}`,
@@ -49,5 +50,24 @@ func TestGetUser(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, expected, string(body))
 	}
+
+}
+
+// TestPostUser 測試新增user
+func TestPostUser(t *testing.T) {
+	u_user := map[string]string{
+		"http://localhost:8080/user": `{"name":"leo"}`,
+	}
+
+	for u, user := range u_user {
+		s := make([]string, 1)
+		s = append(s, user)
+		resp, err := http.PostForm(u, url.Values{"user": s})
+		assert.Nil(t, err)
+		defer resp.Body.Close()
+		assert.Equal(t, http.StatusCreated, resp.StatusCode)
+	}
+
+	// 應驗證剛剛新增的user取出來是否一樣 *todo*
 
 }

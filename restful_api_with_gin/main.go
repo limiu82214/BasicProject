@@ -33,5 +33,9 @@ func main() {
 
 		}
 	})
+	r.POST("/user", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusCreated, struct{}{}) // 應返回新增user的sn *todo*
+	})
+
 	r.Run(":8080")
 }
