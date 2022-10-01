@@ -18,6 +18,7 @@ v0.0.3 => 使用GET取回使用者資料，可以應對不存在的ID `/user/*`
 v0.0.4 => 使用POST新增使用者資料 `/user`，使用leveldb來存放user資料
 * leveldb使用db/member/來儲存會員資料
 * leveldb 是key value的儲存形式，所以沒辦法直接放入struct，先只儲存姓名
+* 新增 CreateUser 用於新增使用者
 
 ## RESTful API
 

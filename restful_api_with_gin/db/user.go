@@ -27,8 +27,6 @@ func GetUser(uid int) (u *user, err error) {
 		log.Fatal(err)
 	}
 	defer db.Close()
-	db.Put([]byte(`user/1`), []byte(`mike`), nil) // *todo* 在測試中用post新增
-	db.Put([]byte(`user/2`), []byte(`joe`), nil)
 
 	data, err := db.Get([]byte(`user/`+strconv.Itoa(uid)), nil)
 	if data == nil {
@@ -37,4 +35,17 @@ func GetUser(uid int) (u *user, err error) {
 		u.Name = string(data)
 		return u, nil
 	}
+}
+
+func CreateUser(uid int, u *user) (err error) {
+	db, err := leveldb.OpenFile("./member", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	err = db.Put([]byte(`user/`+strconv.Itoa(uid)), []byte(u.Name), nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return nil
 }
