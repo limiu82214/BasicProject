@@ -37,7 +37,7 @@ func TestGetUser(t *testing.T) {
 	url_expected := map[string]string{
 		"http://localhost:8080/user/1": `{"name":"mike"}`,
 		"http://localhost:8080/user/2": `{"name":"joe"}`,
-		"http://localhost:8080/user/0": `{}`,
+		"http://localhost:8080/user/0": `null`,
 	}
 
 	for url, expected := range url_expected {

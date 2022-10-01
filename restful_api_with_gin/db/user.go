@@ -16,6 +16,8 @@ func GetUser(uid int) (u *user, err error) {
 		u.Name = "mike" // 應在資料庫存取 *todo*
 	case 2:
 		u.Name = "joe"
+	default:
+		return nil, nil
 	}
 	return u, nil
 }
