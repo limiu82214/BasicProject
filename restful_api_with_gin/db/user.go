@@ -1,7 +1,18 @@
 package db
 
+import (
+	"log"
+	"strconv"
+
+	"github.com/syndtr/goleveldb/leveldb"
+)
+
 type user struct {
 	Name string `json:"name"`
+}
+
+func init() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 }
 
 func NewUser() *user {
@@ -11,13 +22,19 @@ func NewUser() *user {
 
 func GetUser(uid int) (u *user, err error) {
 	u = NewUser()
-	switch uid {
-	case 1:
-		u.Name = "mike" // 應在資料庫存取 *todo*
-	case 2:
-		u.Name = "joe"
-	default:
-		return nil, nil
+	db, err := leveldb.OpenFile("./member", nil)
+	if err != nil {
+		log.Fatal(err)
 	}
-	return u, nil
+	defer db.Close()
+	db.Put([]byte(`user/1`), []byte(`mike`), nil) // *todo* 在測試中用post新增
+	db.Put([]byte(`user/2`), []byte(`joe`), nil)
+
+	data, err := db.Get([]byte(`user/`+strconv.Itoa(uid)), nil)
+	if data == nil {
+		return nil, nil
+	} else {
+		u.Name = string(data)
+		return u, nil
+	}
 }

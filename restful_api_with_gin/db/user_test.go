@@ -16,7 +16,9 @@ func TestGetUser(t *testing.T) {
 	for uid, name := range excepted {
 		user, err := GetUser(uid)
 		assert.Nil(t, err)
-		assert.Equal(t, name, user.Name)
+		if uid != 0 {
+			assert.Equal(t, name, user.Name)
+		}
 	}
 
 }
