@@ -14,11 +14,15 @@ github.com/limiu82214/GoBasicProject/restful_api_with_gin
 
 v0.0.1 => 實現了pin/pong呼叫  
 v0.0.2 => 使用GET取回使用者資料 `/user/1`  
-v0.0.3 => 使用GET取回使用者資料，可以應對不存在的ID `/user/*`  
-v0.0.4 => 使用POST新增使用者資料 `/user`，使用leveldb來存放user資料
+v0.0.3 => 使用GET取回使用者資料，可以應對不存在的ID `/user/*` 
+v0.0.4 => 使用POST新增使用者資料 `/user`，使用leveldb來存放user資料  
+
 * leveldb使用db/member/來儲存會員資料
 * leveldb 是key value的儲存形式，所以沒辦法直接放入struct，先只儲存姓名
-* 新增 CreateUser 用於新增使用者
+* 新增 CreateUser 用於新增使用者，並讓接手POST呼叫
+* *todo* 測試前清空db
+* *todo* 測試不應該與正式db混在一起
+* *todo* leveldb應該要使用單例模式
 
 ## RESTful API
 

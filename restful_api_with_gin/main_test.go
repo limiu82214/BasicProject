@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -55,19 +56,19 @@ func TestGetUser(t *testing.T) {
 
 // TestPostUser 測試新增user
 func TestPostUser(t *testing.T) {
-	u_user := map[string]string{
-		"http://localhost:8080/user": `{"name":"leo"}`,
+
+	uri := "http://localhost:8080/user"
+	u_user := []string{
+		`{"name":"mike"}`,
+		`{"name":"joe"}`,
+		`null`,
 	}
 
-	for u, user := range u_user {
-		s := make([]string, 1)
-		s = append(s, user)
-		resp, err := http.PostForm(u, url.Values{"user": s})
+	for i, user := range u_user {
+		resp, err := http.PostForm(uri, url.Values{"user": []string{user}, "uid": []string{strconv.Itoa(i + 1)}})
 		assert.Nil(t, err)
 		defer resp.Body.Close()
 		assert.Equal(t, http.StatusCreated, resp.StatusCode)
 	}
-
-	// 應驗證剛剛新增的user取出來是否一樣 *todo*
-
+	TestGetUser(t)
 }

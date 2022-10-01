@@ -22,7 +22,7 @@ func NewUser() *user {
 
 func GetUser(uid int) (u *user, err error) {
 	u = NewUser()
-	db, err := leveldb.OpenFile("./member", nil)
+	db, err := leveldb.OpenFile("db/member", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -38,7 +38,7 @@ func GetUser(uid int) (u *user, err error) {
 }
 
 func CreateUser(uid int, u *user) (err error) {
-	db, err := leveldb.OpenFile("./member", nil)
+	db, err := leveldb.OpenFile("db/member", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
