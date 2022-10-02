@@ -20,34 +20,41 @@ func init() {
 
 func main() {
 	r := gin.Default()
-	r.GET("/pin", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "pong",
+	v1 := r.Group("/")
+	{
+		v1.GET("pin", func(ctx *gin.Context) {
+			ctx.JSON(http.StatusOK, gin.H{
+				"message": "pong",
+			})
 		})
-	})
+	}
 
-	r.GET("/user/:uid", func(ctx *gin.Context) {
-		suid := ctx.Param("uid")
-		uid, err := strconv.Atoi(suid)
-		if err != nil {
-			ctx.JSON(http.StatusBadRequest, err)
-		}
-		u, err := db.GetUser(uid)
-		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, err)
-		}
-		ctx.JSON(http.StatusOK, u)
-	})
-	r.POST("/user", func(ctx *gin.Context) {
-		u := db.NewUser()
-		uid, _ := strconv.Atoi(ctx.DefaultPostForm("uid", "0"))
-		err := json.Unmarshal([]byte(ctx.PostForm("user")), u)
-		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, err)
-		}
-		db.CreateUser(uid, u)
-		ctx.JSON(http.StatusCreated, uid)
-	})
+	v2 := r.Group("/user")
+	{
+		v2.GET("/:uid", func(ctx *gin.Context) {
+			suid := ctx.Param("uid")
+			uid, err := strconv.Atoi(suid)
+			if err != nil {
+				ctx.JSON(http.StatusBadRequest, err)
+			}
+			u, err := db.GetUser(uid)
+			if err != nil {
+				ctx.JSON(http.StatusInternalServerError, err)
+			}
+			ctx.JSON(http.StatusOK, u)
+		})
+
+		v2.POST("", func(ctx *gin.Context) {
+			u := db.NewUser()
+			uid, _ := strconv.Atoi(ctx.DefaultPostForm("uid", "0"))
+			err := json.Unmarshal([]byte(ctx.PostForm("user")), u)
+			if err != nil {
+				ctx.JSON(http.StatusInternalServerError, err)
+			}
+			db.CreateUser(uid, u)
+			ctx.JSON(http.StatusCreated, uid)
+		})
+	}
 
 	go (func() {
 		myutil.GetInst()
