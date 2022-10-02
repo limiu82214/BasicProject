@@ -25,13 +25,14 @@ v0.0.4 => 使用POST新增使用者資料 `/user`，使用leveldb來存放user�
 * *todo* leveldb應該要使用單例模式
 
 v0.0.5 => 使用gob來儲存user的資料 (將struct放入db、將struct序列化)
-v0.0.6 => db改成單例模式
+v0.0.6 => db改成單例模式，使用signal的方式讓伺服器關閉前可以斷開db連接
+
 
 * *todo* 改單例後close成了問題，要實作連接池
 
 ## RESTful API
 
-* `POST`
+* `POST` `user` // data 已json的形式帶入 post body
 * `GET` `user/*`
 * `PUT`
 * `PATH`

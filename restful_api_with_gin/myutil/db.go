@@ -1,8 +1,6 @@
 package myutil
 
 import (
-	"log"
-
 	"github.com/syndtr/goleveldb/leveldb"
 )
 
@@ -15,7 +13,12 @@ func GetInst() *leveldb.DB {
 	}
 	db, err = leveldb.OpenFile("db/member", nil)
 	if err != nil {
-		log.Fatal(err)
+		ShutdownServer(err)
 	}
 	return db
+}
+func DisconnectDB() {
+	if db != nil {
+		db.Close()
+	}
 }

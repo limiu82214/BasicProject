@@ -1,13 +1,17 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/db"
+	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil"
 )
 
 func init() {
@@ -45,5 +49,32 @@ func main() {
 		ctx.JSON(http.StatusCreated, uid)
 	})
 
-	r.Run(":8080")
+	go (func() {
+		myutil.GetInst()
+	})()
+
+	srv := &http.Server{
+		Addr:    ":8080",
+		Handler: r,
+	}
+	go (func() {
+		if err := srv.ListenAndServe(); err != nil && errors.Is(err, http.ErrServerClosed) {
+			log.Printf("listen: %s\n", err)
+		}
+		r.Run(":8080")
+	})()
+
+	myutil.ServerNotify()
+	log.Println("伺服器開始關閉...")
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancel()
+
+	log.Println("DB正在斷開連接...")
+	myutil.DisconnectDB()
+	log.Println("伺服器正在關閉...")
+	if err := srv.Shutdown(ctx); err != nil {
+		log.Fatalln("伺服器錯誤退出:", err)
+	}
+	log.Println("伺服器正常運行結束")
 }
