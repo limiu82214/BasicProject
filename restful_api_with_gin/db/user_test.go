@@ -6,6 +6,15 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestCreateUser(t *testing.T) {
+	u := NewUser()
+	u.Name = "mike"
+	CreateUser(1, u)
+	u.Name = "joe"
+	CreateUser(2, u)
+	TestGetUser(t)
+}
+
 func TestGetUser(t *testing.T) {
 	excepted := map[int]string{
 		0: "",
@@ -21,13 +30,4 @@ func TestGetUser(t *testing.T) {
 		}
 	}
 
-}
-
-func TestCreateUser(t *testing.T) {
-	u := NewUser()
-	u.Name = "mike"
-	CreateUser(1, u)
-	u.Name = "joe"
-	CreateUser(2, u)
-	TestGetUser(t)
 }

@@ -1,6 +1,8 @@
 package db
 
 import (
+	"bytes"
+	"encoding/gob"
 	"log"
 	"strconv"
 
@@ -32,7 +34,12 @@ func GetUser(uid int) (u *user, err error) {
 	if data == nil {
 		return nil, nil
 	} else {
-		u.Name = string(data)
+		enc := gob.NewDecoder(bytes.NewReader(data))
+		err := enc.Decode(&u)
+		if err != nil {
+			log.Println(err.Error())
+			return nil, nil
+		}
 		return u, nil
 	}
 }
@@ -43,7 +50,12 @@ func CreateUser(uid int, u *user) (err error) {
 		log.Fatal(err)
 	}
 	defer db.Close()
-	err = db.Put([]byte(`user/`+strconv.Itoa(uid)), []byte(u.Name), nil)
+
+	var data bytes.Buffer
+	enc := gob.NewEncoder(&data)
+	enc.Encode(u)
+
+	err = db.Put([]byte(`user/`+strconv.Itoa(uid)), data.Bytes(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
