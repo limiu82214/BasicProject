@@ -10,8 +10,9 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/db"
-	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil"
+	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/db/user"
+	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/db"
+	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/sig"
 )
 
 func init() {
@@ -37,7 +38,7 @@ func main() {
 			if err != nil {
 				ctx.JSON(http.StatusBadRequest, err)
 			}
-			u, err := db.GetUser(uid)
+			u, err := user.GetUser(uid)
 			if err != nil {
 				ctx.JSON(http.StatusInternalServerError, err)
 			}
@@ -45,13 +46,13 @@ func main() {
 		})
 
 		v2.POST("", func(ctx *gin.Context) {
-			u := db.NewUser()
+			u := user.NewUser()
 			uid, _ := strconv.Atoi(ctx.DefaultPostForm("uid", "0"))
 			err := json.Unmarshal([]byte(ctx.PostForm("user")), u)
 			if err != nil {
 				ctx.JSON(http.StatusInternalServerError, err)
 			}
-			db.CreateUser(uid, u)
+			user.CreateUser(uid, u)
 			ctx.JSON(http.StatusCreated, uid)
 		})
 
@@ -61,7 +62,7 @@ func main() {
 			if err != nil {
 				ctx.JSON(http.StatusBadRequest, err)
 			}
-			err = db.DeleteUser(uid)
+			err = user.DeleteUser(uid)
 			if err != nil {
 				ctx.JSON(http.StatusInternalServerError, err)
 			}
@@ -70,8 +71,8 @@ func main() {
 	}
 
 	go (func() {
-		myutil.SetPath("db/member")
-		myutil.GetInst()
+		db.SetPath("db/member")
+		db.GetInst()
 	})()
 
 	srv := &http.Server{
@@ -85,14 +86,14 @@ func main() {
 		r.Run(":8080")
 	})()
 
-	myutil.ServerNotify()
+	sig.ServerNotify()
 	log.Println("伺服器開始關閉...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
 
 	log.Println("DB正在斷開連接...")
-	myutil.DisconnectDB()
+	db.DisconnectDB()
 	log.Println("伺服器正在關閉...")
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatalln("伺服器錯誤退出:", err)

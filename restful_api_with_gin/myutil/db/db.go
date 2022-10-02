@@ -1,6 +1,7 @@
-package myutil
+package db
 
 import (
+	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/sig"
 	"github.com/syndtr/goleveldb/leveldb"
 )
 
@@ -18,7 +19,7 @@ func GetInst() *leveldb.DB {
 	}
 	db, err = leveldb.OpenFile(path, nil)
 	if err != nil {
-		ShutdownServer(err)
+		sig.ShutdownServer(err)
 	}
 	return db
 }

@@ -1,15 +1,15 @@
-package db
+package user
 
 import (
 	"testing"
 
-	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil"
+	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/db"
 	"github.com/stretchr/testify/assert"
 )
 
 func init() {
-	myutil.SetPath("member")
-	myutil.GetInst()
+	db.SetPath("/../member")
+	db.GetInst()
 }
 
 func TestDeleteUser(t *testing.T) {
