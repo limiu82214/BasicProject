@@ -14,6 +14,6 @@ func StoreStructToByte(a any) ([]byte, error) {
 
 func GetStrutFromByte(b []byte, a any) error {
 	enc := gob.NewDecoder(bytes.NewReader(b))
-	err := enc.Decode(&a)
+	err := enc.Decode(a)
 	return err
 }
