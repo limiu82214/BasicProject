@@ -25,6 +25,9 @@ v0.0.4 => 使用POST新增使用者資料 `/user`，使用leveldb來存放user�
 * *todo* leveldb應該要使用單例模式
 
 v0.0.5 => 使用gob來儲存user的資料 (將struct放入db、將struct序列化)
+v0.0.6 => db改成單例模式
+
+* *todo* 改單例後close成了問題，要實作連接池
 
 ## RESTful API
 
@@ -50,8 +53,9 @@ v0.0.5 => 使用gob來儲存user的資料 (將struct放入db、將struct序列�
 * 503 service unavailable
 * 504 gateway timeout
 
-# Point
+## Point
 
 * http request 的Test寫法 v0.0.1
 * leveldb的使用 v0.0.4
 * gob的使用 v0.0.5
+* leveldb單例封裝 v0.0.6
