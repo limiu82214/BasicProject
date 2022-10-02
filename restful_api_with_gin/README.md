@@ -22,13 +22,14 @@ v0.0.4 => 使用POST新增使用者資料 `/user`，使用leveldb來存放user�
 * 新增 CreateUser 用於新增使用者，並讓接手POST呼叫
 * *todo* 測試前清空db
 * *todo* 測試不應該與正式db混在一起
-* *todo* leveldb應該要使用單例模式
+* ~~*todo* leveldb應該要使用單例模式~~
 
 v0.0.5 => 使用gob來儲存user的資料 (將struct放入db、將struct序列化)
 
 * *todo* 改單例後close成了問題，要實作連接池
 
 v0.0.6 => db改成單例模式，使用signal的方式讓伺服器關閉前可以斷開db連接
+v0.0.7 => DELETE
 
 
 ## RESTful API
@@ -37,7 +38,7 @@ v0.0.6 => db改成單例模式，使用signal的方式讓伺服器關閉前可�
 * `GET` `user/*`
 * `PUT`
 * `PATH`
-* `DELETE`
+* `DELETE` `user/*`
 
 ### return
 
@@ -59,5 +60,6 @@ v0.0.6 => db改成單例模式，使用signal的方式讓伺服器關閉前可�
 
 * http request 的Test寫法 v0.0.1
 * leveldb的使用 v0.0.4
-* gob的使用 v0.0.5
+* gob將struct序列化 v0.0.5
 * leveldb單例封裝 v0.0.6
+* 監聽signal，db連接失敗或重大錯誤時利用signal關閉server v0.0.6

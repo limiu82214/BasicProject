@@ -54,6 +54,19 @@ func main() {
 			db.CreateUser(uid, u)
 			ctx.JSON(http.StatusCreated, uid)
 		})
+
+		v2.DELETE("/:uid", func(ctx *gin.Context) {
+			suid := ctx.Param("uid")
+			uid, err := strconv.Atoi(suid)
+			if err != nil {
+				ctx.JSON(http.StatusBadRequest, err)
+			}
+			err = db.DeleteUser(uid)
+			if err != nil {
+				ctx.JSON(http.StatusInternalServerError, err)
+			}
+			ctx.JSON(http.StatusOK, uid)
+		})
 	}
 
 	go (func() {

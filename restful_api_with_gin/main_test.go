@@ -72,3 +72,40 @@ func TestPostUser(t *testing.T) {
 	}
 	TestGetUser(t)
 }
+
+// TestPostUser 測試刪除user
+func TestDeleteUser(t *testing.T) {
+	uri := "http://localhost:8080/user"
+
+	// create one
+	resp, err := http.PostForm(uri, url.Values{"user": []string{`{"name":"mike"}`}, "uid": []string{`1`}})
+	assert.Nil(t, err)
+	defer resp.Body.Close()
+	assert.Equal(t, http.StatusCreated, resp.StatusCode)
+
+	// check created
+	resp, err = http.Get(uri + "/1")
+	assert.Nil(t, err)
+	defer resp.Body.Close()
+	assert.Equal(t, 200, resp.StatusCode)
+
+	body, err := ioutil.ReadAll(resp.Body)
+	assert.Nil(t, err)
+	assert.Equal(t, `{"name":"mike"}`, string(body))
+
+	// delete one
+	req, err := http.NewRequest(http.MethodDelete, uri+"/1", nil)
+	assert.Nil(t, err)
+	_, err = http.DefaultClient.Do(req)
+	assert.Nil(t, err)
+
+	// check deleted
+	resp, err = http.Get(uri + "/1")
+	assert.Nil(t, err)
+	defer resp.Body.Close()
+	assert.Equal(t, 200, resp.StatusCode)
+
+	body, err = ioutil.ReadAll(resp.Body)
+	assert.Nil(t, err)
+	assert.Equal(t, ``, string(body))
+}
