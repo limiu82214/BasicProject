@@ -30,6 +30,7 @@ v0.0.5 => 使用gob來儲存user的資料 (將struct放入db、將struct序列�
 
 v0.0.6 => db改成單例模式，使用signal的方式讓伺服器關閉前可以斷開db連接
 v0.0.7 => DELETE 刪除資料 `/user/*`
+v0.0.8 => 整理分類模組
 
 
 ## RESTful API
