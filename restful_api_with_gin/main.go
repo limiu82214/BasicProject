@@ -70,6 +70,7 @@ func main() {
 	}
 
 	go (func() {
+		myutil.SetPath("db/member")
 		myutil.GetInst()
 	})()
 

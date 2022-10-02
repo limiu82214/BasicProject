@@ -107,5 +107,5 @@ func TestDeleteUser(t *testing.T) {
 
 	body, err = ioutil.ReadAll(resp.Body)
 	assert.Nil(t, err)
-	assert.Equal(t, ``, string(body))
+	assert.Equal(t, `null`, string(body))
 }
