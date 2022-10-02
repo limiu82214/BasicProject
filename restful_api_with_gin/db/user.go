@@ -1,11 +1,10 @@
 package db
 
 import (
-	"bytes"
-	"encoding/gob"
 	"log"
 	"strconv"
 
+	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil"
 	"github.com/syndtr/goleveldb/leveldb"
 )
 
@@ -34,8 +33,8 @@ func GetUser(uid int) (u *user, err error) {
 	if data == nil {
 		return nil, nil
 	} else {
-		enc := gob.NewDecoder(bytes.NewReader(data))
-		err := enc.Decode(&u)
+
+		err := myutil.GetStrutFromByte(data, &u)
 		if err != nil {
 			log.Println(err.Error())
 			return nil, nil
@@ -51,11 +50,12 @@ func CreateUser(uid int, u *user) (err error) {
 	}
 	defer db.Close()
 
-	var data bytes.Buffer
-	enc := gob.NewEncoder(&data)
-	enc.Encode(u)
+	bytes, err := myutil.StoreStructToByte(u)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
-	err = db.Put([]byte(`user/`+strconv.Itoa(uid)), data.Bytes(), nil)
+	err = db.Put([]byte(`user/`+strconv.Itoa(uid)), bytes, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

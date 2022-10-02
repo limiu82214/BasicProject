@@ -54,3 +54,4 @@ v0.0.5 => 使用gob來儲存user的資料 (將struct放入db、將struct序列�
 
 * http request 的Test寫法 v0.0.1
 * leveldb的使用 v0.0.4
+* gob的使用 v0.0.5
