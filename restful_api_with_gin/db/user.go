@@ -51,3 +51,12 @@ func CreateUser(uid int, u *user) (err error) {
 	}
 	return nil
 }
+
+func DeleteUser(uid int) (err error) {
+	db := myutil.GetInst()
+	err = db.Delete([]byte(`user/`+strconv.Itoa(uid)), nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return nil
+}
