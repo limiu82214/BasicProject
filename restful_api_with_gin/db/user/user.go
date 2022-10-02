@@ -10,6 +10,7 @@ import (
 
 type user struct {
 	Name string `json:"name"`
+	Age  int    `json:"age"`
 }
 
 func init() {

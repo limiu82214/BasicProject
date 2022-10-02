@@ -4,6 +4,8 @@ github.com/limiu82214/GoBasicProject/restful_api_with_gin
 
 使用gin完成restful_api
 [github gin](https://github.com/gin-gonic/gin)
+使用goleveldb作資料庫
+[github goleveldb](https://github.com/syndtr/goleveldb)
 
 ## 規劃
 
@@ -31,14 +33,15 @@ v0.0.5 => 使用gob來儲存user的資料 (將struct放入db、將struct序列�
 v0.0.6 => db改成單例模式，使用signal的方式讓伺服器關閉前可以斷開db連接
 v0.0.7 => DELETE 刪除資料 `/user/*`
 v0.0.8 => 整理分類模組
+v0.0.9 => user 可以儲存姓名以外的資料
 
 
 ## RESTful API
 
 * `POST` `user` // data 已json的形式帶入 post body
 * `GET` `user/*`
-* `PUT`
-* `PATH`
+* `PUT` 暫不實作
+* `PATH` 暫不實作
 * `DELETE` `user/*`
 
 ### return
@@ -64,3 +67,10 @@ v0.0.8 => 整理分類模組
 * gob將struct序列化 v0.0.5
 * leveldb單例封裝 v0.0.6
 * 監聽signal，db連接失敗或重大錯誤時利用signal關閉server v0.0.6
+
+## 尚未完成項目
+* [ ] mysql接入，預計使用GORM
+* [ ] mysql與leveldb共用介面，可切換使用
+* [ ] redis接入
+* [ ] redis快取資料
+* [ ] 分散式接收API呼叫

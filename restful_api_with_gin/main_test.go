@@ -38,8 +38,8 @@ func TestPostUser(t *testing.T) {
 
 	uri := "http://localhost:8080/user"
 	u_user := []string{
-		`{"name":"mike"}`,
-		`{"name":"joe"}`,
+		`{"name":"mike", "age":12}`,
+		`{"name":"joe", "age":24}`,
 		`null`,
 	}
 
@@ -52,8 +52,8 @@ func TestPostUser(t *testing.T) {
 
 	{ // read
 		url_expected := map[string]string{
-			"http://localhost:8080/user/1": `{"name":"mike"}`,
-			"http://localhost:8080/user/2": `{"name":"joe"}`,
+			"http://localhost:8080/user/1": `{"name":"mike","age":12}`,
+			"http://localhost:8080/user/2": `{"name":"joe","age":24}`,
 			"http://localhost:8080/user/0": `null`,
 		}
 
@@ -75,7 +75,7 @@ func TestDeleteUser(t *testing.T) {
 	uri := "http://localhost:8080/user"
 
 	// create one
-	resp, err := http.PostForm(uri, url.Values{"user": []string{`{"name":"mike"}`}, "uid": []string{`1`}})
+	resp, err := http.PostForm(uri, url.Values{"user": []string{`{"name":"mike", "age":8}`}, "uid": []string{`1`}})
 	assert.Nil(t, err)
 	defer resp.Body.Close()
 	assert.Equal(t, http.StatusCreated, resp.StatusCode)
@@ -88,7 +88,7 @@ func TestDeleteUser(t *testing.T) {
 
 	body, err := ioutil.ReadAll(resp.Body)
 	assert.Nil(t, err)
-	assert.Equal(t, `{"name":"mike"}`, string(body))
+	assert.Equal(t, `{"name":"mike","age":8}`, string(body))
 
 	// delete one
 	req, err := http.NewRequest(http.MethodDelete, uri+"/1", nil)
