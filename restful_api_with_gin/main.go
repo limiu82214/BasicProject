@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"flag"
 	"log"
 	"net/http"
 	"strconv"
@@ -71,7 +72,13 @@ func main() {
 	}
 
 	go (func() {
-		db.SetPath("db/member")
+		debugPtr := flag.Bool("production", false, "change path to production path")
+		flag.Parse()
+		if *debugPtr {
+			db.SetPath("db/member")
+		} else {
+			db.SetPath("db_test/member")
+		}
 		db.GetInst()
 	})()
 

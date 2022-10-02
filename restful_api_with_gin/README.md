@@ -23,17 +23,18 @@ v0.0.4 => 使用POST新增使用者資料 `/user`，使用leveldb來存放user�
 * leveldb 是key value的儲存形式，所以沒辦法直接放入struct，先只儲存姓名
 * 新增 CreateUser 用於新增使用者，並讓接手POST呼叫
 * *todo* 測試前清空db
-* *todo* 測試不應該與正式db混在一起
+* ~~*todo* 測試不應該與正式db混在一起~~ v0.0.10
 * ~~*todo* leveldb應該要使用單例模式~~
 
-v0.0.5 => 使用gob來儲存user的資料 (將struct放入db、將struct序列化)
+v0.0.5 => 使用gob來儲存user的資料 (將struct放入db、將struct序列化)  
 
 * *todo* 改單例後close成了問題，要實作連接池
 
-v0.0.6 => db改成單例模式，使用signal的方式讓伺服器關閉前可以斷開db連接
-v0.0.7 => DELETE 刪除資料 `/user/*`
-v0.0.8 => 整理分類模組
-v0.0.9 => user 可以儲存姓名以外的資料
+v0.0.6 => db改成單例模式，使用signal的方式讓伺服器關閉前可以斷開db連接  
+v0.0.7 => DELETE 刪除資料 `/user/*`  
+v0.0.8 => 整理分類模組  
+v0.0.9 => user 可以儲存姓名以外的資料  
+v0.0.10 => 平時使用db_test測試與開發。`go run . -production`時才會使用正是路徑
 
 
 ## RESTful API
@@ -69,6 +70,7 @@ v0.0.9 => user 可以儲存姓名以外的資料
 * 監聽signal，db連接失敗或重大錯誤時利用signal關閉server v0.0.6
 
 ## 尚未完成項目
+
 * [ ] mysql接入，預計使用GORM
 * [ ] mysql與leveldb共用介面，可切換使用
 * [ ] redis接入

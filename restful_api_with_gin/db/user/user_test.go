@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	db.SetPath("/../member")
+	db.SetPath("/../../db_test/member")
 	db.GetInst()
 }
 
