@@ -2,10 +2,14 @@
 
 github.com/limiu82214/GoBasicProject/restful_api_with_gin
 
-使用gin完成restful_api
-[github gin](https://github.com/gin-gonic/gin)
-使用goleveldb作資料庫
-[github goleveldb](https://github.com/syndtr/goleveldb)
+使用gin完成restful_api  
+[github gin](https://github.com/gin-gonic/gin)  
+使用goleveldb作資料庫 v0.0.4
+[github goleveldb](https://github.com/syndtr/goleveldb)  
+使用Mysql作為資料庫  
+[github mysql](https://github.com/go-sql-driver/mysql)  
+使用Gorm作為Mysql的ORM  
+[github gorm](https://github.com/jinzhu/gorm)  
 
 ## 規劃
 

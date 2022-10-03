@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/db/user"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/db"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/sig"
@@ -47,7 +48,7 @@ func main() {
 		})
 
 		v2.POST("", func(ctx *gin.Context) {
-			u := user.NewUser()
+			u := &user.User{}
 			uid, _ := strconv.Atoi(ctx.DefaultPostForm("uid", "0"))
 			err := json.Unmarshal([]byte(ctx.PostForm("user")), u)
 			if err != nil {
@@ -75,11 +76,10 @@ func main() {
 		debugPtr := flag.Bool("production", false, "change path to production path")
 		flag.Parse()
 		if *debugPtr {
-			db.SetPath("db/member")
 		} else {
-			db.SetPath("db_test/member")
+			d := db.GetInst()
+			d.LogMode(true)
 		}
-		db.GetInst()
 	})()
 
 	srv := &http.Server{

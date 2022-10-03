@@ -8,14 +8,8 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/db"
 	"github.com/stretchr/testify/assert"
 )
-
-func init() {
-	db.SetPath("/db_test/member")
-	db.GetInst()
-}
 
 // TestPinPong 測試伺服器有無回應
 func TestPinPong(t *testing.T) {
