@@ -49,13 +49,17 @@ func main() {
 
 		v2.POST("", func(ctx *gin.Context) {
 			u := &user.User{}
-			uid, _ := strconv.Atoi(ctx.DefaultPostForm("uid", "0"))
 			err := json.Unmarshal([]byte(ctx.PostForm("user")), u)
 			if err != nil {
 				ctx.JSON(http.StatusInternalServerError, err)
 			}
-			user.CreateUser(uid, u)
-			ctx.JSON(http.StatusCreated, uid)
+			uid, _ := user.CreateUser(u)
+			if uid != 0 {
+				ctx.JSON(http.StatusCreated, u.Uid)
+			} else {
+				ctx.JSON(http.StatusConflict, u.Uid)
+
+			}
 		})
 
 		v2.DELETE("/:uid", func(ctx *gin.Context) {

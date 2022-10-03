@@ -57,26 +57,18 @@ func TestCreateUser(t *testing.T) {
 		},
 	}
 
+	idlist := make(map[int]User, len(ulist))
 	for i := range ulist {
-		CreateUser(&ulist[i])
-	}
-	AfterPostTestGetUser(t)
-}
-
-func AfterPostTestGetUser(t *testing.T) {
-	excepted := map[int]string{
-		0: "",
-		1: "mike",
-		2: "joe",
+		x, _ := CreateUser(&ulist[i])
+		idlist[x] = ulist[i]
 	}
 
-	for uid, name := range excepted {
-		user, err := GetUser(uid)
+	for uid, u := range idlist {
+		u2, err := GetUser(uid)
 		assert.Nil(t, err)
 		if uid != 0 {
-			assert.NotNil(t, user)
-			assert.Equal(t, name, user.Name)
+			assert.NotNil(t, u2)
+			assert.Equal(t, &u, u2)
 		}
 	}
-
 }

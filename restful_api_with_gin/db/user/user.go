@@ -24,8 +24,11 @@ func GetUser(uid int) (u *User, err error) {
 
 func CreateUser(u *User) (uid int, err error) {
 	db := db.GetInst()
-	db.Create(&u)
-	return u.Uid, nil
+	rst := db.Create(&u)
+	if rst.RowsAffected > 0 {
+		return u.Uid, nil
+	}
+	return 0, nil
 }
 
 func DeleteUser(uid int) (err error) {
