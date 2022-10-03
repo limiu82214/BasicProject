@@ -8,19 +8,30 @@ import (
 )
 
 func init() {
-	db.SetPath("/../../db_test/member")
-	db.GetInst()
+	ResetDB()
+}
+func ResetDB() {
+	d := db.GetInst()
+	d.Exec("DROP TABLE users")
+	d.Exec("CREATE TABLE `users` ( `uid` int(11) NOT NULL AUTO_INCREMENT, `account` varchar(50) NOT NULL DEFAULT '', `pwd` varchar(200) NOT NULL DEFAULT '', `name` varchar(50) NOT NULL DEFAULT '', `age` tinyint(4) DEFAULT NULL, PRIMARY KEY (`uid`), UNIQUE KEY `account` (`account`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; ")
 }
 
 func TestDeleteUser(t *testing.T) {
+	ResetDB()
+	ulist := []User{
+		{
+			Name:    "mike",
+			Account: "mike",
+			Pwd:     "123",
+			Age:     12,
+		},
+	}
 	// create one
-	u := NewUser()
-	u.Name = "mike"
-	CreateUser(1, u)
+	CreateUser(&ulist[0])
 
 	// check created
 	u2, _ := GetUser(1)
-	assert.Equal(t, u, u2)
+	assert.Equal(t, &ulist[0], u2)
 
 	DeleteUser(1)
 
@@ -30,15 +41,29 @@ func TestDeleteUser(t *testing.T) {
 }
 
 func TestCreateUser(t *testing.T) {
-	u := NewUser()
-	u.Name = "mike"
-	CreateUser(1, u)
-	u.Name = "joe"
-	CreateUser(2, u)
-	TestGetUser(t)
+	ResetDB()
+	ulist := []User{
+		{
+			Name:    "mike",
+			Account: "mike",
+			Pwd:     "123",
+			Age:     12,
+		},
+		{
+			Name:    "joe",
+			Account: "joe",
+			Pwd:     "321",
+			Age:     24,
+		},
+	}
+
+	for i := range ulist {
+		CreateUser(&ulist[i])
+	}
+	AfterPostTestGetUser(t)
 }
 
-func TestGetUser(t *testing.T) {
+func AfterPostTestGetUser(t *testing.T) {
 	excepted := map[int]string{
 		0: "",
 		1: "mike",
@@ -49,6 +74,7 @@ func TestGetUser(t *testing.T) {
 		user, err := GetUser(uid)
 		assert.Nil(t, err)
 		if uid != 0 {
+			assert.NotNil(t, user)
 			assert.Equal(t, name, user.Name)
 		}
 	}

@@ -1,7 +1,7 @@
 package user
 
 type User struct {
-	Uid     uint `gorm:"primary_key"`
+	Uid     int `gorm:"primary_key"`
 	Account string
 	Pwd     string
 	Name    string
