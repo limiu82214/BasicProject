@@ -39,6 +39,7 @@ v0.0.7 => DELETE 刪除資料 `/user/*`
 v0.0.8 => 整理分類模組  
 v0.0.9 => user 可以儲存姓名以外的資料  
 v0.0.10 => 平時使用db_test測試與開發。`go run . -production`時才會使用正是路徑
+v0.1.0 => 導入Mysql使用Gorm
 
 
 ## RESTful API
@@ -75,8 +76,8 @@ v0.0.10 => 平時使用db_test測試與開發。`go run . -production`時才會�
 
 ## 尚未完成項目
 
-* [ ] mysql接入，預計使用GORM
-* [ ] mysql與leveldb共用介面，可切換使用
+* [x] mysql接入，預計使用GORM v0.1.0
+* ~~[ ] mysql與leveldb共用介面，可切換使用~~
 * [ ] redis接入
 * [ ] redis快取資料
 * [ ] 分散式接收API呼叫
