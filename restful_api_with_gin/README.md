@@ -2,14 +2,10 @@
 
 github.com/limiu82214/GoBasicProject/restful_api_with_gin
 
-使用gin完成restful_api  
-[github gin](https://github.com/gin-gonic/gin)  
-使用goleveldb作資料庫 v0.0.4
-[github goleveldb](https://github.com/syndtr/goleveldb)  
-使用Mysql作為資料庫  
-[github mysql](https://github.com/go-sql-driver/mysql)  
-使用Gorm作為Mysql的ORM  
-[github gorm](https://github.com/jinzhu/gorm)  
+使用gin完成restful_api [github gin](https://github.com/gin-gonic/gin)  
+使用goleveldb作資料庫 v0.0.4 [github goleveldb](https://github.com/syndtr/goleveldb)  
+使用Mysql作為資料庫 v0.1.0 [github mysql](https://github.com/go-sql-driver/mysql)  
+使用Gorm作為Mysql的ORM v0.1.0 [github gorm](https://github.com/jinzhu/gorm)  
 
 ## 規劃
 
@@ -31,9 +27,6 @@ v0.0.4 => 使用POST新增使用者資料 `/user`，使用leveldb來存放user�
 * ~~*todo* leveldb應該要使用單例模式~~
 
 v0.0.5 => 使用gob來儲存user的資料 (將struct放入db、將struct序列化)  
-
-* *todo* 改單例後close成了問題，要實作連接池
-
 v0.0.6 => db改成單例模式，使用signal的方式讓伺服器關閉前可以斷開db連接  
 v0.0.7 => DELETE 刪除資料 `/user/*`  
 v0.0.8 => 整理分類模組  
@@ -76,8 +69,16 @@ v0.1.0 => 導入Mysql使用Gorm
 
 ## 尚未完成項目
 
-* [x] mysql接入，預計使用GORM v0.1.0
-* ~~[ ] mysql與leveldb共用介面，可切換使用~~
+* [x] mysql接入，預計使用GORM v0.1.0 
+~~ *[ ] mysql與leveldb共用介面，可切換使用~~
 * [ ] redis接入
 * [ ] redis快取資料
-* [ ] 分散式接收API呼叫
+* [ ] 使用channel來控制測試順序
+
+## 有可能會使用的項目
+
+* [ ] Clean Architecture
+* [ ] k8s 微服務
+* [ ] docker
+* [ ] 建立聊天室，並將聊天室服務與User服務透過k8s分開
+* [ ] 使用docker佈署測試環境
