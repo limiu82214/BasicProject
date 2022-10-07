@@ -78,11 +78,12 @@ v0.1.1 => 使用docker安裝redis環境，透過redigo使用redis
     * `$docker run --name redis_test -d -p 6379:6379 test_env`
 * [ ] redis快取資料
 * [ ] 使用channel來控制測試順序
+* [x] docker v0.1.1
+* [ ] docker 將環境打包在一起，若含程式原始碼則一並打包
 
 ## 有可能會使用的項目
 
 * [ ] Clean Architecture
 * [ ] k8s 微服務
-* [x] docker
 * [ ] 建立聊天室，並將聊天室服務與User服務透過k8s分開
 * [ ] 使用docker佈署測試環境
