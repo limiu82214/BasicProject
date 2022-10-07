@@ -12,8 +12,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gomodule/redigo/redis"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/db/user"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/db"
+	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/myredis"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/sig"
 )
 
@@ -22,6 +24,12 @@ func init() {
 }
 
 func main() {
+	conn := myredis.RedisDefaultPool.Get()
+	s, err := redis.String(conn.Do("get", "name"))
+	if err != nil {
+		log.Fatalln(err)
+	}
+	log.Fatalln(s)
 	r := gin.Default()
 	v1 := r.Group("/")
 	{

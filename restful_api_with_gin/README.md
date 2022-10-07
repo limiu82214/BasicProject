@@ -6,6 +6,7 @@ github.com/limiu82214/GoBasicProject/restful_api_with_gin
 使用goleveldb作資料庫 v0.0.4 [github goleveldb](https://github.com/syndtr/goleveldb)  
 使用Mysql作為資料庫 v0.1.0 [github mysql](https://github.com/go-sql-driver/mysql)  
 使用Gorm作為Mysql的ORM v0.1.0 [github gorm](https://github.com/jinzhu/gorm)  
+使用Redigo作為redis的工具 v0.1.1 [github redigo](https://github.com/gomodule/redigo)
 
 ## 規劃
 
@@ -31,8 +32,9 @@ v0.0.6 => db改成單例模式，使用signal的方式讓伺服器關閉前可�
 v0.0.7 => DELETE 刪除資料 `/user/*`  
 v0.0.8 => 整理分類模組  
 v0.0.9 => user 可以儲存姓名以外的資料  
-v0.0.10 => 平時使用db_test測試與開發。`go run . -production`時才會使用正是路徑
-v0.1.0 => 導入Mysql使用Gorm
+v0.0.10 => 平時使用db_test測試與開發。`go run . -production`時才會使用正是路徑  
+v0.1.0 => 導入Mysql使用Gorm  
+v0.1.1 => 使用docker安裝redis環境，透過redigo使用redis
 
 
 ## RESTful API
@@ -71,7 +73,9 @@ v0.1.0 => 導入Mysql使用Gorm
 
 * [x] mysql接入，預計使用GORM v0.1.0 
 ~~ *[ ] mysql與leveldb共用介面，可切換使用~~
-* [ ] redis接入
+* [*] redis接入 (使用docker安裝)
+    * `$docker build -t test_env .` // use Dockerfile
+    * `$docker run --name redis_test -d -p 6379:6379 test_env`
 * [ ] redis快取資料
 * [ ] 使用channel來控制測試順序
 
@@ -79,6 +83,6 @@ v0.1.0 => 導入Mysql使用Gorm
 
 * [ ] Clean Architecture
 * [ ] k8s 微服務
-* [ ] docker
+* [x] docker
 * [ ] 建立聊天室，並將聊天室服務與User服務透過k8s分開
 * [ ] 使用docker佈署測試環境
