@@ -34,7 +34,8 @@ v0.0.8 => 整理分類模組
 v0.0.9 => user 可以儲存姓名以外的資料  
 v0.0.10 => 平時使用db_test測試與開發。`go run . -production`時才會使用正是路徑  
 v0.1.0 => 導入Mysql使用Gorm  
-v0.1.1 => 使用docker安裝redis環境，透過redigo使用redis
+v0.1.1 => 使用docker安裝redis環境，透過redigo使用redis  
+v0.1.2 => 將mysql也透過docker運行(使用docker-composer.yml `docker compose up -d`)  
 
 
 ## RESTful API
