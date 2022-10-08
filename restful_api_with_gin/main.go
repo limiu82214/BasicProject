@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/db/user"
+	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/db"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/myredis"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/sig"
@@ -33,9 +34,10 @@ func main() {
 
 	v2 := r.Group("/user")
 	{
-		v2.GET("/:uid", user.DaoGetUser)
-		v2.POST("", user.DaoPostUser)
-		v2.DELETE("/:uid", user.DaoDeleteUser)
+
+		v2.GET("/:uid", myutil.CacheDecorator(user.DaoGetUser, "uid", "uid_%s", user.User{}))
+		v2.POST("", myutil.DefaultDecorator(user.DaoPostUser))
+		v2.DELETE("/:uid", myutil.DefaultDecorator(user.DaoDeleteUser))
 	}
 
 	go (func() {

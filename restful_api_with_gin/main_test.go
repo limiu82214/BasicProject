@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/db/user"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/db"
@@ -129,6 +130,7 @@ func TestDeleteUser(t *testing.T) {
 	_, err = http.DefaultClient.Do(req)
 	assert.Nil(t, err)
 
+	time.Sleep(time.Second * 5) // for cache
 	// check deleted
 	resp, err = http.Get(uri + "/1")
 	assert.Nil(t, err)

@@ -8,17 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func DaoGetUser(ctx *gin.Context) {
+func DaoGetUser(ctx *gin.Context) (any, error) {
 	suid := ctx.Param("uid")
 	uid, err := strconv.Atoi(suid)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, err)
+		return http.StatusBadRequest, err
 	}
-	u, err := GetUser(uid)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err)
-	}
-	ctx.JSON(http.StatusOK, u)
+	return GetUser(uid)
 }
 
 func DaoPostUser(ctx *gin.Context) {
