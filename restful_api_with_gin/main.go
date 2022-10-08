@@ -2,12 +2,10 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"flag"
 	"log"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -35,46 +33,9 @@ func main() {
 
 	v2 := r.Group("/user")
 	{
-		v2.GET("/:uid", func(ctx *gin.Context) {
-			suid := ctx.Param("uid")
-			uid, err := strconv.Atoi(suid)
-			if err != nil {
-				ctx.JSON(http.StatusBadRequest, err)
-			}
-			u, err := user.GetUser(uid)
-			if err != nil {
-				ctx.JSON(http.StatusInternalServerError, err)
-			}
-			ctx.JSON(http.StatusOK, u)
-		})
-
-		v2.POST("", func(ctx *gin.Context) {
-			u := &user.User{}
-			err := json.Unmarshal([]byte(ctx.PostForm("user")), u)
-			if err != nil {
-				ctx.JSON(http.StatusInternalServerError, err)
-			}
-			uid, _ := user.CreateUser(u)
-			if uid != 0 {
-				ctx.JSON(http.StatusCreated, u.Uid)
-			} else {
-				ctx.JSON(http.StatusConflict, u.Uid)
-
-			}
-		})
-
-		v2.DELETE("/:uid", func(ctx *gin.Context) {
-			suid := ctx.Param("uid")
-			uid, err := strconv.Atoi(suid)
-			if err != nil {
-				ctx.JSON(http.StatusBadRequest, err)
-			}
-			err = user.DeleteUser(uid)
-			if err != nil {
-				ctx.JSON(http.StatusInternalServerError, err)
-			}
-			ctx.JSON(http.StatusOK, uid)
-		})
+		v2.GET("/:uid", user.DaoGetUser)
+		v2.POST("", user.DaoPostUser)
+		v2.DELETE("/:uid", user.DaoDeleteUser)
 	}
 
 	go (func() {
