@@ -6,40 +6,42 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil"
 )
 
-func DaoGetUser(ctx *gin.Context) (any, error) {
+func DaoGetUser(ctx *gin.Context) (any, myutil.StatusErrorer) {
 	suid := ctx.Param("uid")
 	uid, err := strconv.Atoi(suid)
 	if err != nil {
-		return http.StatusBadRequest, err
+		return nil, myutil.NewStatusError(http.StatusBadRequest, err)
 	}
-	return GetUser(uid)
+	u, err := GetUser(uid)
+	return u, myutil.NewStatusError(http.StatusOK, err)
 }
 
-func DaoPostUser(ctx *gin.Context) {
+func DaoPostUser(ctx *gin.Context) (any, myutil.StatusErrorer) {
 	u := &User{}
 	err := json.Unmarshal([]byte(ctx.PostForm("user")), u)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err)
+		return nil, myutil.NewStatusError(http.StatusInternalServerError, err)
 	}
 	uid, _ := CreateUser(u)
 	if uid != 0 {
-		ctx.JSON(http.StatusCreated, u.Uid)
+		return u.Uid, myutil.NewStatusErrorString(http.StatusCreated, "")
 	} else {
-		ctx.JSON(http.StatusConflict, u.Uid)
+		return u.Uid, myutil.NewStatusErrorString(http.StatusConflict, "existed")
 	}
 }
 
-func DaoDeleteUser(ctx *gin.Context) {
+func DaoDeleteUser(ctx *gin.Context) (any, myutil.StatusErrorer) {
 	suid := ctx.Param("uid")
 	uid, err := strconv.Atoi(suid)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, err)
+		return nil, myutil.NewStatusError(http.StatusBadRequest, err)
 	}
 	err = DeleteUser(uid)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err)
+		return nil, myutil.NewStatusErrorString(http.StatusInternalServerError, "StatusInternalServerError")
 	}
-	ctx.JSON(http.StatusOK, uid)
+	return uid, myutil.NewStatusErrorString(http.StatusOK, "")
 }

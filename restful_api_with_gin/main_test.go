@@ -15,7 +15,6 @@ import (
 )
 
 func init() {
-	ResetDB()
 }
 
 func ResetDB() {
@@ -73,6 +72,7 @@ func TestPostUser(t *testing.T) {
 		defer resp.Body.Close()
 		assert.Equal(t, http.StatusCreated, resp.StatusCode)
 		uid, _ := ioutil.ReadAll(resp.Body)
+		assert.Positive(t, uid)
 		t_i, _ := strconv.Atoi(string(uid))
 		ulist[i].Uid = t_i
 		idlist[t_i] = ulist[i]

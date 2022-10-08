@@ -10,13 +10,14 @@ import (
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/myredis"
 )
 
-func DefaultDecorator(h gin.HandlerFunc) gin.HandlerFunc {
+func DefaultDecorator(h HandlerFuncWithResult) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		h(ctx)
+		s, se := h(ctx)
+		ctx.JSON(se.Status(), s)
 	}
 }
 
-type HandlerFuncWithResult func(*gin.Context) (any, error)
+type HandlerFuncWithResult func(*gin.Context) (any, StatusErrorer)
 
 func CacheDecorator(h HandlerFuncWithResult, param string, redisKeyPattern string,
 	empty interface{}) gin.HandlerFunc {
@@ -28,8 +29,8 @@ func CacheDecorator(h HandlerFuncWithResult, param string, redisKeyPattern strin
 		rst, err := redis.Bytes(conn.Do("get", redisKey))
 		if err != nil {
 			rst, err := h(ctx)
-			if err != nil {
-				ctx.JSON(rst.(int), err)
+			if err != nil && err.Status() != http.StatusOK {
+				ctx.JSON(err.Status(), err)
 			}
 			j, _ := json.Marshal(rst)
 			conn.Do("setex", redisKey, 5, j)

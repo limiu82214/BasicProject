@@ -1,6 +1,7 @@
 {
     "cSpell.ignoreWords": [
         "gorm",
-        "myredis"
+        "myredis",
+        "myutil"
     ]
 }
