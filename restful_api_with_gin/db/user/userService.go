@@ -9,7 +9,7 @@ import (
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil"
 )
 
-func DaoGetUser(ctx *gin.Context) (any, myutil.StatusErrorer) {
+func ServiceGetUser(ctx *gin.Context) (any, myutil.StatusErrorer) {
 	suid := ctx.Param("uid")
 	uid, err := strconv.Atoi(suid)
 	if err != nil {
@@ -19,7 +19,7 @@ func DaoGetUser(ctx *gin.Context) (any, myutil.StatusErrorer) {
 	return u, myutil.NewStatusError(http.StatusOK, err)
 }
 
-func DaoPostUser(ctx *gin.Context) (any, myutil.StatusErrorer) {
+func ServicePostUser(ctx *gin.Context) (any, myutil.StatusErrorer) {
 	u := &User{}
 	err := json.Unmarshal([]byte(ctx.PostForm("user")), u)
 	if err != nil {
@@ -33,7 +33,7 @@ func DaoPostUser(ctx *gin.Context) (any, myutil.StatusErrorer) {
 	}
 }
 
-func DaoDeleteUser(ctx *gin.Context) (any, myutil.StatusErrorer) {
+func ServiceDeleteUser(ctx *gin.Context) (any, myutil.StatusErrorer) {
 	suid := ctx.Param("uid")
 	uid, err := strconv.Atoi(suid)
 	if err != nil {

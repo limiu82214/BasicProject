@@ -35,9 +35,9 @@ func main() {
 	v2 := r.Group("/user")
 	{
 
-		v2.GET("/:uid", myutil.CacheDecorator(user.DaoGetUser, "uid", "uid_%s", user.User{}))
-		v2.POST("", myutil.DefaultDecorator(user.DaoPostUser))
-		v2.DELETE("/:uid", myutil.DefaultDecorator(user.DaoDeleteUser))
+		v2.GET("/:uid", myutil.CacheDecorator(user.ServiceGetUser, "uid", "uid_%s", user.User{}))
+		v2.POST("", myutil.DefaultDecorator(user.ServicePostUser))
+		v2.DELETE("/:uid", myutil.DefaultDecorator(user.ServiceDeleteUser))
 	}
 
 	go (func() {
