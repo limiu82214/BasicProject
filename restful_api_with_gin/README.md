@@ -19,14 +19,6 @@ v0.0.1 => 實現了pin/pong呼叫
 v0.0.2 => 使用GET取回使用者資料 `/user/1`  
 v0.0.3 => 使用GET取回使用者資料，可以應對不存在的ID `/user/*`  
 v0.0.4 => 使用POST新增使用者資料 `/user`，使用leveldb來存放user資料  
-
-* leveldb使用db/member/來儲存會員資料
-* leveldb 是key value的儲存形式，所以沒辦法直接放入struct，先只儲存姓名
-* 新增 CreateUser 用於新增使用者，並讓接手POST呼叫
-* *todo* 測試前清空db
-* ~~*todo* 測試不應該與正式db混在一起~~ v0.0.10
-* ~~*todo* leveldb應該要使用單例模式~~
-
 v0.0.5 => 使用gob來儲存user的資料 (將struct放入db、將struct序列化)  
 v0.0.6 => db改成單例模式，使用signal的方式讓伺服器關閉前可以斷開db連接  
 v0.0.7 => DELETE 刪除資料 `/user/*`  
@@ -74,9 +66,9 @@ v0.1.2 => 將mysql也透過docker運行(使用docker-composer.yml `docker compos
 
 * [x] mysql接入，預計使用GORM v0.1.0 
 ~~ *[ ] mysql與leveldb共用介面，可切換使用~~
-* [*] redis接入 (使用docker安裝)
-    * `$docker build -t test_env .` // use Dockerfile
-    * `$docker run --name redis_test -d -p 6379:6379 test_env`
+* [*] redis接入 (使用docker安裝) v0.1.2 改用docker compose
+    ~~ * `$docker build -t test_env .` // use Dockerfile  v0.1.1 ~~
+    ~~ * `$docker run --name redis_test -d -p 6379:6379 test_env` v0.1.1 ~~
 * [ ] redis快取資料
 * [ ] 使用channel來控制測試順序
 * [x] docker v0.1.1

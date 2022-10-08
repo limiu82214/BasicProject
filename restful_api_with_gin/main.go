@@ -14,6 +14,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/db/user"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/db"
+	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/myredis"
 	"github.com/limiu82214/GoBasicProject/restful_api_with_gin/myutil/sig"
 )
 
@@ -105,6 +106,8 @@ func main() {
 
 	log.Println("DB正在斷開連接...")
 	db.DisconnectDB()
+	log.Println("Redis正在斷開連接...")
+	myredis.RedisDefaultPool.Close()
 	log.Println("伺服器正在關閉...")
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatalln("伺服器錯誤退出:", err)
