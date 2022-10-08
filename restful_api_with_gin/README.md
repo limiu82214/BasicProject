@@ -28,6 +28,7 @@ v0.0.10 => 平時使用db_test測試與開發。`go run . -production`時才會�
 v0.1.0 => 導入Mysql使用Gorm  
 v0.1.1 => 使用docker安裝redis環境，透過redigo使用redis  
 v0.1.2 => 將mysql也透過docker運行(使用docker-composer.yml `docker compose up -d`)  
+v0.1.3 => 使用redis快取GET的資料(使用裝飾器模式)，並分離Service層  
 
 
 ## RESTful API
@@ -69,7 +70,7 @@ v0.1.2 => 將mysql也透過docker運行(使用docker-composer.yml `docker compos
 * [*] redis接入 (使用docker安裝) v0.1.2 改用docker compose
     ~~ * `$docker build -t test_env .` // use Dockerfile  v0.1.1 ~~
     ~~ * `$docker run --name redis_test -d -p 6379:6379 test_env` v0.1.1 ~~
-* [ ] redis快取資料
+* [x] redis快取資料 v0.1.3
 * [ ] 使用channel來控制測試順序
 * [x] docker v0.1.1
 * [ ] docker 將環境打包在一起，若含程式原始碼則一並打包
