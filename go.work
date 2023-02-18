@@ -1,3 +1,6 @@
 go 1.19
 
-use .\restful_api_with_gin\
+use (
+	./ooxx
+	./restful_api_with_gin/
+)
