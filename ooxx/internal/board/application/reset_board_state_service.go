@@ -2,17 +2,37 @@ package application
 
 import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
+	"github.com/pkg/errors"
 )
 
 type resetBoardState struct {
+	loadBoardPort out.ILoadBoardPort
 }
 
-func NewResetBoardState() in.IResetBoardStateUseCase {
-	return &resetBoardState{}
+func NewResetBoardState(loadBoardPort out.ILoadBoardPort) in.IResetBoardStateUseCase {
+	return &resetBoardState{
+		loadBoardPort: loadBoardPort,
+	}
 }
 
-func (rbs *resetBoardState) ResetBoardState() {
-	board := domain.GetBoardInst()
+func (rbs *resetBoardState) ResetBoardState() error {
+	board, err := rbs.loadBoardPort.GetBoard()
+	if err != nil {
+		if errors.Is(err, domain.ErrGetBoardEmpty) {
+			board = domain.NewBoard()
+		} else {
+			return errors.Wrap(err, "in service resetBoardState")
+		}
+	}
+
 	board.ResetBoardState()
+
+	err = rbs.loadBoardPort.SetBoard(board)
+	if err != nil {
+		return errors.Wrap(err, "in service resetBoardState")
+	}
+
+	return nil
 }

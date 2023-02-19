@@ -15,6 +15,7 @@ type IBoardGopromptAdapter interface {
 	SetState()
 	WhoWin()
 	ShowBoard()
+	ResetBoard()
 }
 
 type boardGopromptAdapter struct {
@@ -43,6 +44,7 @@ func Completer(d prompt.Document) []prompt.Suggest {
 		{Text: "set", Description: "set the state on board"},
 		{Text: "winner", Description: "tell you O/X win or not"},
 		{Text: "show", Description: "print board"},
+		{Text: "reset", Description: "reset board"},
 		{Text: "q", Description: "exit"},
 	}
 
@@ -55,7 +57,12 @@ func nullCompleter(d prompt.Document) []prompt.Suggest {
 }
 
 func (bpa *boardGopromptAdapter) ShowBoard() {
-	bs := bpa.getBoardStateUseCase.GetBoardState()
+	bs, err := bpa.getBoardStateUseCase.GetBoardState()
+	if err != nil {
+		log.Println(err.Error())
+
+		return
+	}
 	// TODO: 檢查回傳的bs修改其值會不會影響到整個board
 
 	b, err := json.Marshal(bs)
@@ -69,8 +76,12 @@ func (bpa *boardGopromptAdapter) ShowBoard() {
 }
 
 func (bpa *boardGopromptAdapter) ResetBoard() {
-	bpa.resetBoardStateUseCase.ResetBoardState()
-	log.Println("sys: reset board state done.")
+	err := bpa.resetBoardStateUseCase.ResetBoardState()
+	if err != nil {
+		log.Println(err.Error())
+	} else {
+		log.Println("sys: reset board state done.")
+	}
 }
 
 func (bpa *boardGopromptAdapter) SetState() {
@@ -110,7 +121,11 @@ func (bpa *boardGopromptAdapter) SetState() {
 }
 
 func (bpa *boardGopromptAdapter) WhoWin() {
-	winner := bpa.whoWinUseCase.WhoWin()
+	winner, err := bpa.whoWinUseCase.WhoWin()
+	if err != nil {
+		log.Panicln(err.Error())
+	}
+
 	if winner == domain.Blank {
 		log.Print("sys: nobody win")
 	} else {

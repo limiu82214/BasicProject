@@ -8,7 +8,7 @@ import (
 
 type IBoardPlayerAdapter interface {
 	SetState(x, y int, s domain.State) error
-	WhoWin() domain.State
+	WhoWin() (domain.State, error)
 }
 
 type boardPlayerAdapter struct {
@@ -34,6 +34,6 @@ func (bpa *boardPlayerAdapter) SetState(x, y int, s domain.State) error {
 	return nil
 }
 
-func (bpa *boardPlayerAdapter) WhoWin() domain.State {
+func (bpa *boardPlayerAdapter) WhoWin() (domain.State, error) {
 	return bpa.whoWinUseCase.WhoWin()
 }

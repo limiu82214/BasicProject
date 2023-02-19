@@ -2,15 +2,19 @@ package application
 
 import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
 	"github.com/pkg/errors"
 )
 
 type setState struct {
+	loadBoardPort out.ILoadBoardPort
 }
 
-func NewSetState() in.ISetStateUseCase {
-	return &setState{}
+func NewSetState(loadBoardPort out.ILoadBoardPort) in.ISetStateUseCase {
+	return &setState{
+		loadBoardPort: loadBoardPort,
+	}
 }
 
 func (ss *setState) SetState(cmd *in.SetStateCmd) error {
@@ -18,11 +22,23 @@ func (ss *setState) SetState(cmd *in.SetStateCmd) error {
 		panic("檢查是本基")
 	}
 
-	board := domain.GetBoardInst()
-
-	err := board.SetState(cmd.X, cmd.Y, cmd.S)
+	board, err := ss.loadBoardPort.GetBoard()
 	if err != nil {
-		return errors.Wrap(err, "application service setState")
+		if errors.Is(err, domain.ErrGetBoardEmpty) {
+			board = domain.NewBoard()
+		} else {
+			return errors.Wrap(err, "in service setState")
+		}
+	}
+
+	err = board.SetState(cmd.X, cmd.Y, cmd.S)
+	if err != nil {
+		return errors.Wrap(err, "in service setState")
+	}
+
+	err = ss.loadBoardPort.SetBoard(board)
+	if err != nil {
+		return errors.Wrap(err, "in service setState")
 	}
 
 	whoWin := board.WhoWin()

@@ -9,54 +9,60 @@ type IBoard interface {
 	ResetBoardState()
 	SetState(x, y int, s State) error
 	WhoWin() State
+	SetBoardStatus(bs *BoardStatus) error
+	GetBoardStatus() (BoardStatus, error)
 }
 
-type board struct {
-	board [3][3]State
-	rule  iRule
+type Board struct {
+	boardStatus *BoardStatus
+	rule        iRule
 }
 
-var boardOnce *board //nolint:gochecknoglobals // only allow this board
-
-func GetBoardInst() IBoard {
-	if boardOnce != nil {
-		return boardOnce
-	}
-
-	b := &board{
-		rule: &rule{
-			lastState: 0,
-		},
+func NewBoard() IBoard {
+	b := &Board{
+		boardStatus: &BoardStatus{},
+		rule:        &rule{},
 	}
 	b.ResetBoardState()
-	boardOnce = b
 
-	return boardOnce
+	return b
 }
 
-func (b *board) ResetBoardState() {
-	for row := range b.board {
-		for col := range b.board[row] {
-			b.board[row][col].SetBlank()
+func (b *Board) ResetBoardState() {
+	for row := range b.boardStatus.Board {
+		for col := range b.boardStatus.Board[row] {
+			b.boardStatus.Board[row][col].SetBlank()
 		}
 	}
+
+	b.boardStatus.LastState = Blank
 }
 
-func (b *board) GetBoardState() [3][3]State {
-	return b.board
+func (b *Board) GetBoardState() [3][3]State {
+	return b.boardStatus.Board
 }
 
-func (b *board) SetState(x, y int, s State) error {
-	err := b.rule.setState(b, x, y, s)
-	if err != nil {
-		return errors.Wrap(err, "domain board SetState")
-	}
+func (b *Board) GetBoardStatus() (BoardStatus, error) {
+	return *b.boardStatus, nil
+}
 
-	b.board[x][y] = s
+func (b *Board) SetBoardStatus(bs *BoardStatus) error {
+	b.boardStatus = bs
 
 	return nil
 }
 
-func (b *board) WhoWin() State {
+func (b *Board) SetState(x, y int, s State) error {
+	err := b.rule.setState(b, x, y, s)
+	if err != nil {
+		return errors.Wrap(err, ErrSetState.Error())
+	}
+
+	b.boardStatus.Board[x][y] = s
+
+	return nil
+}
+
+func (b *Board) WhoWin() State {
 	return b.rule.whoWin(b)
 }

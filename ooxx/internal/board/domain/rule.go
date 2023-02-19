@@ -3,19 +3,18 @@ package domain
 import "errors"
 
 type iRule interface {
-	whoWin(b *board) State
-	isMyTune(b *board, s State) bool
-	setState(b *board, x, y int, s State) error
+	whoWin(b *Board) State
+	isMyTune(b *Board, s State) bool
+	setState(b *Board, x, y int, s State) error
 }
 
 type rule struct {
-	lastState State
 }
 
 var errNotYourTurn = errors.New("is not your turn")
 var errIsNotBlankPos = errors.New("this pos is not Blank")
 
-func (r *rule) setState(b *board, x, y int, s State) error {
+func (r *rule) setState(b *Board, x, y int, s State) error {
 	if !r.isMyTune(b, s) {
 		return errNotYourTurn
 	}
@@ -24,17 +23,17 @@ func (r *rule) setState(b *board, x, y int, s State) error {
 		return errIsNotBlankPos
 	}
 
-	r.lastState = s
+	b.boardStatus.LastState = s
 
 	return nil
 }
 
-func (r *rule) isBlankPos(b *board, x, y int) bool {
-	return b.board[x][y] == Blank
+func (r *rule) isBlankPos(b *Board, x, y int) bool {
+	return b.boardStatus.Board[x][y] == Blank
 }
 
-func (r *rule) isMyTune(b *board, s State) bool {
-	lastPlayState := State(r.lastState)
+func (r *rule) isMyTune(b *Board, s State) bool {
+	lastPlayState := State(b.boardStatus.LastState)
 	if lastPlayState == Blank {
 		return true
 	}
@@ -42,7 +41,7 @@ func (r *rule) isMyTune(b *board, s State) bool {
 	return lastPlayState != s
 }
 
-func (r *rule) whoWin(b *board) State {
+func (r *rule) whoWin(b *Board) State {
 	if r.isWin(b, O) {
 		return O
 	}
@@ -54,31 +53,31 @@ func (r *rule) whoWin(b *board) State {
 	return Blank
 }
 
-func (r *rule) isWin(b *board, s State) bool { //nolint:cyclop // this is simplest
+func (r *rule) isWin(b *Board, s State) bool { //nolint:cyclop // this is simplest
 	// row, col
 	for i := 0; i < 2; i++ {
-		if b.board[i][0] == s &&
-			b.board[i][1] == s &&
-			b.board[i][2] == s {
+		if b.boardStatus.Board[i][0] == s &&
+			b.boardStatus.Board[i][1] == s &&
+			b.boardStatus.Board[i][2] == s {
 			return true
 		}
 
-		if b.board[0][i] == s &&
-			b.board[1][i] == s &&
-			b.board[2][i] == s {
+		if b.boardStatus.Board[0][i] == s &&
+			b.boardStatus.Board[1][i] == s &&
+			b.boardStatus.Board[2][i] == s {
 			return true
 		}
 	}
 
-	if b.board[0][0] == s &&
-		b.board[1][1] == s &&
-		b.board[2][2] == s {
+	if b.boardStatus.Board[0][0] == s &&
+		b.boardStatus.Board[1][1] == s &&
+		b.boardStatus.Board[2][2] == s {
 		return true
 	}
 
-	if b.board[0][2] == s &&
-		b.board[1][1] == s &&
-		b.board[2][0] == s {
+	if b.boardStatus.Board[0][2] == s &&
+		b.boardStatus.Board[1][1] == s &&
+		b.boardStatus.Board[2][0] == s {
 		return true
 	}
 

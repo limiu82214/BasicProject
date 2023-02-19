@@ -1,5 +1,5 @@
 package in
 
 type IResetBoardStateUseCase interface {
-	ResetBoardState()
+	ResetBoardState() error
 }
