@@ -13,7 +13,7 @@ func NewWhoWin() in.IWhoWinUseCase {
 }
 
 func (ww *whoWin) WhoWin() domain.State {
-	board := domain.GetBoard()
+	board := domain.GetBoardInst()
 
 	return board.WhoWin()
 }

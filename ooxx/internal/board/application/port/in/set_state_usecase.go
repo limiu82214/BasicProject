@@ -1,5 +1,5 @@
 package in
 
 type ISetStateUseCase interface {
-	SetState(cmd *SetStateCmd)
+	SetState(cmd *SetStateCmd) error
 }

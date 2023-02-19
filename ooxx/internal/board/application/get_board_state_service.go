@@ -13,7 +13,7 @@ func NewGetBoardState() in.IGetBoardStateUseCase {
 }
 
 func (gbs *getBoardState) GetBoardState() [3][3]domain.State {
-	board := domain.GetBoard()
+	board := domain.GetBoardInst()
 
 	return board.GetBoardState()
 }

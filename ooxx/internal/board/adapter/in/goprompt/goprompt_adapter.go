@@ -100,9 +100,13 @@ func (bpa *boardGopromptAdapter) SetState() {
 		log.Println(err.Error())
 	}
 
-	bpa.setStateUseCase.SetState(ssc)
-	bpa.ShowBoard()
-	log.Printf("sys: [%d][%d] will be %d.", x, y, s)
+	err = bpa.setStateUseCase.SetState(ssc)
+	if err != nil {
+		log.Printf("sys: %s", err.Error())
+	} else {
+		bpa.ShowBoard()
+		log.Printf("sys: [%d][%d] will be %d.", x, y, s)
+	}
 }
 
 func (bpa *boardGopromptAdapter) WhoWin() {

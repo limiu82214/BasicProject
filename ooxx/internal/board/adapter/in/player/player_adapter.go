@@ -26,7 +26,10 @@ func (bpa *boardPlayerAdapter) SetState(x, y int, s domain.State) error {
 		return errors.Wrap(err, "SetState")
 	}
 
-	bpa.setStateUseCase.SetState(ssc)
+	err = bpa.setStateUseCase.SetState(ssc)
+	if err != nil {
+		return errors.Wrap(err, "player_adapter setState")
+	}
 
 	return nil
 }

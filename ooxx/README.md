@@ -12,7 +12,8 @@ github.com/limiu82214/GoBasicProject/ooxx
 
 * [v] 單例board
 * [v] board可以設定狀態
-* [] 要輪流下
+* [v] 要輪流下
+* [v] 不能重覆下
 * [] 有一方勝出要立刻顯示
 * [] 勝出後要自動重置狀態
 * [] leveldb存board

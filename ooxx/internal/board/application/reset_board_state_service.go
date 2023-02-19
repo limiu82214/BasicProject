@@ -13,6 +13,6 @@ func NewResetBoardState() in.IResetBoardStateUseCase {
 }
 
 func (rbs *resetBoardState) ResetBoardState() {
-	board := domain.GetBoard()
+	board := domain.GetBoardInst()
 	board.ResetBoardState()
 }
