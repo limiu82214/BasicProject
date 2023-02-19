@@ -13,15 +13,24 @@ type rule struct {
 }
 
 var errNotYourTurn = errors.New("is not your turn")
+var errIsNotBlankPos = errors.New("this pos is not Blank")
 
 func (r *rule) setState(b *board, x, y int, s State) error {
-	if !b.rule.isMyTune(b, s) {
+	if !r.isMyTune(b, s) {
 		return errNotYourTurn
+	}
+
+	if !r.isBlankPos(b, x, y) {
+		return errIsNotBlankPos
 	}
 
 	r.lastState = s
 
 	return nil
+}
+
+func (r *rule) isBlankPos(b *board, x, y int) bool {
+	return b.board[x][y] == Blank
 }
 
 func (r *rule) isMyTune(b *board, s State) bool {
