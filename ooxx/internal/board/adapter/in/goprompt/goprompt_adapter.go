@@ -40,8 +40,8 @@ func NewBoardGopromptAdapter(
 
 func Completer(d prompt.Document) []prompt.Suggest {
 	s := []prompt.Suggest{
-		{Text: "set state", Description: "set the state on board"},
-		{Text: "who win", Description: "tell you O/X win or not"},
+		{Text: "set", Description: "set the state on board"},
+		{Text: "winner", Description: "tell you O/X win or not"},
 		{Text: "show", Description: "print board"},
 		{Text: "q", Description: "exit"},
 	}

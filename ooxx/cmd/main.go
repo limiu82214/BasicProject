@@ -10,7 +10,7 @@ import (
 
 func main() {
 	gp := goprompt.NewBoardGopromptAdapter(
-		application.NewGetSiteInfo(),
+		application.NewSetState(),
 		application.NewWhoWin(),
 		application.NewGetBoardState(),
 		application.NewResetBoardState(),
@@ -19,9 +19,9 @@ leave:
 	for {
 		t := prompt.Input("action: ", goprompt.Completer)
 		switch t {
-		case "set state":
+		case "set":
 			gp.SetState()
-		case "who win":
+		case "winner":
 			gp.WhoWin()
 		case "show":
 			gp.ShowBoard()
