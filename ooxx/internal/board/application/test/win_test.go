@@ -13,7 +13,7 @@ import (
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/leveldb"
 )
 
-func Test_setState_SetState(t *testing.T) { //nolint // this is test
+func Test_setState_SetState(t *testing.T) {
 	db := leveldb.GetInst()
 	ldba := leveldb_adapter.NewBoardLevelDBAdapter(db)
 	nss := application.NewSetState(ldba)

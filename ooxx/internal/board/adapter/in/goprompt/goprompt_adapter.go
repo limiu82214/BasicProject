@@ -63,7 +63,6 @@ func (bpa *boardGopromptAdapter) ShowBoard() {
 
 		return
 	}
-	// TODO: 檢查回傳的bs修改其值會不會影響到整個board
 
 	b, err := json.Marshal(bs)
 	if err != nil {

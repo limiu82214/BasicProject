@@ -35,5 +35,6 @@ func (bpa *boardPlayerAdapter) SetState(x, y int, s domain.State) error {
 }
 
 func (bpa *boardPlayerAdapter) WhoWin() (domain.State, error) {
-	return bpa.whoWinUseCase.WhoWin()
+	s, err := bpa.whoWinUseCase.WhoWin()
+	return s, errors.Wrap(err, "in adapter WhoWin")
 }
