@@ -20,7 +20,7 @@ func NewWhoWin(loadBoardPort out.ILoadBoardPort) in.IWhoWinUseCase {
 func (ww *whoWin) WhoWin() (domain.State, error) {
 	board, err := ww.loadBoardPort.GetBoard()
 	if err != nil {
-		if errors.Is(err, domain.ErrGetBoardEmpty) {
+		if errors.Is(err, domain.ErrGetEmpty) {
 			board = domain.NewBoard()
 		} else {
 			return domain.Blank, errors.Wrap(err, "in service WhoWin")

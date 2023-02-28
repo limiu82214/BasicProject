@@ -8,14 +8,14 @@ import (
 	"github.com/syndtr/goleveldb/leveldb"
 )
 
-type boardLevelDBAdapter struct {
-	db *leveldb.DB
-}
-
 var errGetBoardFail = errors.New("get board fail")
 var errSetBoardFail = errors.New("set board fail")
 var errParseBoardToStoreFail = errors.New("parse board to store fail")
 var errParseBoardFromStoreFail = errors.New("parse board from store fail")
+
+type boardLevelDBAdapter struct {
+	db *leveldb.DB
+}
 
 func NewBoardLevelDBAdapter(db *leveldb.DB) out.ILoadBoardPort {
 	return &boardLevelDBAdapter{
@@ -49,14 +49,14 @@ func (bldba *boardLevelDBAdapter) GetBoard() (domain.IBoard, error) {
 	data, err := bldba.db.Get(id, nil)
 	if err != nil {
 		if errors.Is(err, leveldb.ErrNotFound) {
-			return nil, domain.ErrGetBoardEmpty
+			return nil, domain.ErrGetEmpty
 		}
 
 		return nil, errors.Wrap(err, errGetBoardFail.Error())
 	}
 
 	if data == nil {
-		return nil, domain.ErrGetBoardEmpty
+		return nil, domain.ErrGetEmpty
 	}
 
 	var s domain.BoardStatus

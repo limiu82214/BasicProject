@@ -20,7 +20,7 @@ func NewGetBoardState(loadBoardPort out.ILoadBoardPort) in.IGetBoardStateUseCase
 func (gbs *getBoardState) GetBoardState() ([3][3]domain.State, error) {
 	board, err := gbs.loadBoardPort.GetBoard()
 	if err != nil {
-		if errors.Is(err, domain.ErrGetBoardEmpty) {
+		if errors.Is(err, domain.ErrGetEmpty) {
 			board = domain.NewBoard()
 		} else {
 			return [3][3]domain.State{}, errors.Wrap(err, "in service resetBoardState")

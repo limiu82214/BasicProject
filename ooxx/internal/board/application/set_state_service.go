@@ -24,7 +24,7 @@ func (ss *setState) SetState(cmd *in.SetStateCmd) error {
 
 	board, err := ss.loadBoardPort.GetBoard()
 	if err != nil {
-		if errors.Is(err, domain.ErrGetBoardEmpty) {
+		if errors.Is(err, domain.ErrGetEmpty) {
 			board = domain.NewBoard()
 		} else {
 			return errors.Wrap(err, "in service setState")

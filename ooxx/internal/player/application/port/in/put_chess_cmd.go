@@ -9,14 +9,21 @@ import (
 type PutChessCmd struct {
 	isValid bool
 
-	X int
-	Y int
-	S domain.State
+	Nickname string
+	X        int
+	Y        int
+	S        domain.State
 }
 
 var errOutOfRange = errors.New("must 0~2")
+var errNicknameErr = errors.New("nickname error")
 
-func NewPutChessCmd(x, y int, s domain.State) (*PutChessCmd, error) {
+func NewPutChessCmd(nickname string, x, y int, s domain.State) (*PutChessCmd, error) {
+	l := len(nickname)
+	if l < 1 || l > 3 {
+		return nil, errNicknameErr
+	}
+
 	if x < 0 || x > 2 {
 		return nil, errOutOfRange
 	}
@@ -30,10 +37,11 @@ func NewPutChessCmd(x, y int, s domain.State) (*PutChessCmd, error) {
 	}
 
 	ssc := &PutChessCmd{
-		X:       x,
-		Y:       y,
-		S:       s,
-		isValid: true,
+		Nickname: nickname,
+		X:        x,
+		Y:        y,
+		S:        s,
+		isValid:  true,
 	}
 
 	return ssc, nil

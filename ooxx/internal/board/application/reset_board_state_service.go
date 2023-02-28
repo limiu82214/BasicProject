@@ -20,7 +20,7 @@ func NewResetBoardState(loadBoardPort out.ILoadBoardPort) in.IResetBoardStateUse
 func (rbs *resetBoardState) ResetBoardState() error {
 	board, err := rbs.loadBoardPort.GetBoard()
 	if err != nil {
-		if errors.Is(err, domain.ErrGetBoardEmpty) {
+		if errors.Is(err, domain.ErrGetEmpty) {
 			board = domain.NewBoard()
 		} else {
 			return errors.Wrap(err, "in service resetBoardState")

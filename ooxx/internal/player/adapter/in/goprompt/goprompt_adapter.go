@@ -16,6 +16,7 @@ type IPlayerGopromptAdapter interface {
 	ShowBoard()
 	ResetBoard()
 	WhoWin()
+	SetPlayerInfo()
 }
 
 type playerGopromptAdapter struct {
@@ -23,6 +24,7 @@ type playerGopromptAdapter struct {
 	putChessUseCase      in.IPutChessUseCase
 	resetBoardUseCase    in.IResetBoardUseCase
 	whoWinUseCase        in.IWhoWinUseCase
+	setPlayerInfoUseCase in.ISetPlayerInfoUseCase
 }
 
 func NewPlayerGopromptAdapter(
@@ -30,12 +32,14 @@ func NewPlayerGopromptAdapter(
 	putChessUseCase in.IPutChessUseCase,
 	resetBoardUseCase in.IResetBoardUseCase,
 	whoWinUseCase in.IWhoWinUseCase,
+	setPlayerInfoUseCase in.ISetPlayerInfoUseCase,
 ) IPlayerGopromptAdapter {
 	return &playerGopromptAdapter{
 		getBoardStateUseCase: getBoardStateUseCase,
 		putChessUseCase:      putChessUseCase,
 		resetBoardUseCase:    resetBoardUseCase,
 		whoWinUseCase:        whoWinUseCase,
+		setPlayerInfoUseCase: setPlayerInfoUseCase,
 	}
 }
 
@@ -45,6 +49,7 @@ func Completer(d prompt.Document) []prompt.Suggest {
 		{Text: "show", Description: "print board"},
 		{Text: "reset", Description: "reset board"},
 		{Text: "winner", Description: "show who win"},
+		{Text: "setinfo", Description: "set info"},
 		{Text: "q", Description: "exit"},
 	}
 
@@ -85,6 +90,7 @@ func (bpa *playerGopromptAdapter) ResetBoard() {
 }
 
 func (bpa *playerGopromptAdapter) PutChess() {
+	nickname := prompt.Input("nickname: ", nullCompleter)
 	xStr := prompt.Input("x: ", nullCompleter)
 	yStr := prompt.Input("y: ", nullCompleter)
 	sStr := prompt.Input("state: ", nullCompleter)
@@ -109,7 +115,7 @@ func (bpa *playerGopromptAdapter) PutChess() {
 
 	ss := domain.State(s)
 
-	ssc, err := in.NewPutChessCmd(x, y, ss)
+	ssc, err := in.NewPutChessCmd(nickname, x, y, ss)
 	if err != nil {
 		log.Println(err.Error())
 		return
@@ -119,7 +125,7 @@ func (bpa *playerGopromptAdapter) PutChess() {
 	if err != nil {
 		log.Printf("sys: %s", err.Error())
 	} else {
-		log.Printf("sys: [%d][%d] will be %d.", x, y, s)
+		log.Printf("sys: %s put chess, [%d][%d] will be %d.", nickname, x, y, s)
 	}
 }
 
@@ -135,4 +141,22 @@ func (bpa *playerGopromptAdapter) WhoWin() {
 	} else {
 		log.Printf("sys: winner is %d", winner)
 	}
+}
+
+func (bpa *playerGopromptAdapter) SetPlayerInfo() {
+	nickname := prompt.Input("Nickname len(1~3): ", nullCompleter)
+
+	cmd, err := in.NewSetPlayerInfoCmd(nickname)
+	if err != nil {
+		log.Panicln(err.Error())
+		return
+	}
+
+	err = bpa.setPlayerInfoUseCase.SetPlayerInfo(cmd)
+	if err != nil {
+		log.Panicln(err.Error())
+		return
+	}
+
+	log.Printf("sys: set nickname(%s) success.", nickname)
 }

@@ -40,10 +40,17 @@ github.com/limiu82214/GoBasicProject/ooxx
         透過board的功能show棋盤。
         輸入： prompt
         輸出： board
-* [] 可以同時的多個board
-* [] 加入player
+* [v] 加入player
+* [v] 要先設定玩家nick name才能玩
+* 這是一個插入的需求，他並不符合player本身的邏輯，但是符合業務需求，所以加在usecase
+* [] 整理，抽離共用，整理成固定的規則
+    Err
+    State
+    Board與Player結構比對
+    命名規劃
 * [] 由player輪流玩
 * [] 加入三戰兩勝的機制
+* [] 可以同時的多個board
 
 ### [ ] 階段二
 
@@ -64,3 +71,4 @@ github.com/limiu82214/GoBasicProject/ooxx
 ## 額外原則
 * 如果兩個組件都是自己的，要實做in與out，提供功能那方把資料給出可用性高的格式，使用功能那方再把資料轉換成自己需要的格式。
 * 在每個地方增加 errInHere 給error wrap使用
+* Cmd 使用new建構，並要實作IsValid確保是由New產生的物件，在service中必需要使用IsValid。
