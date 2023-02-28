@@ -24,8 +24,6 @@ func (gbs *getBoardState) GetBoardState() ([3][3]domain.State, error) {
 	// 	return [3][3]domain.State{}, errors.Wrap(err, "in service resetBoardState")
 	// }
 
-	// b := [3][3]domain.State{}
-
 	// for i := range tmpB {
 	// 	for j := range tmpB[i] {
 	// 		b[i][j] = domain.State(tmpB[i][j])
