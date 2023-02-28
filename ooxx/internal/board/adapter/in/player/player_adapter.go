@@ -14,23 +14,27 @@ type IBoardPlayerAdapter interface {
 	GetBoardState() ([3][3]domain.State, error)
 	SetState(x, y, s int) error
 	ResetBoard() error
+	WhoWin() (domain.State, error)
 }
 
 type boardPlayerAdapter struct {
 	getBoardUseCase        in.IGetBoardStateUseCase
 	setStateUseCase        in.ISetStateUseCase
 	resetBoardStateUseCase in.IResetBoardStateUseCase
+	whoWinUseCase          in.IWhoWinUseCase
 }
 
 func NewBoardPlayerAdapter(
 	getBoardUseCase in.IGetBoardStateUseCase,
 	setStateUseCase in.ISetStateUseCase,
 	resetBoardStateUseCase in.IResetBoardStateUseCase,
+	whoWinUseCase in.IWhoWinUseCase,
 ) IBoardPlayerAdapter {
 	return &boardPlayerAdapter{
 		getBoardUseCase:        getBoardUseCase,
 		setStateUseCase:        setStateUseCase,
 		resetBoardStateUseCase: resetBoardStateUseCase,
+		whoWinUseCase:          whoWinUseCase,
 	}
 }
 
@@ -55,4 +59,9 @@ func (bpa *boardPlayerAdapter) SetState(x, y, s int) error {
 func (bpa *boardPlayerAdapter) ResetBoard() error {
 	err := bpa.resetBoardStateUseCase.ResetBoardState()
 	return errors.Wrap(err, errInHere.Error())
+}
+
+func (bpa *boardPlayerAdapter) WhoWin() (domain.State, error) {
+	ds, err := bpa.whoWinUseCase.WhoWin()
+	return ds, errors.Wrap(err, errInHere.Error())
 }

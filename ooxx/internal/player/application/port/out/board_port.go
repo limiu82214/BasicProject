@@ -6,4 +6,5 @@ type IBoardPort interface {
 	GetBoardState() ([3][3]domain.State, error)
 	SetBoardState(x, y, s int) error
 	ResetBoard() error
+	WhoWin() (domain.State, error)
 }

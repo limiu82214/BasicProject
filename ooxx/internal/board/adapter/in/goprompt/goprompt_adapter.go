@@ -60,13 +60,13 @@ func (bpa *boardGopromptAdapter) ShowBoard() {
 	bs, err := bpa.getBoardStateUseCase.GetBoardState()
 	if err != nil {
 		log.Println(err.Error())
-
 		return
 	}
 
 	b, err := json.Marshal(bs)
 	if err != nil {
 		log.Println(err.Error())
+		return
 	}
 
 	ans := string(b[1 : len(b)-1])
@@ -91,16 +91,19 @@ func (bpa *boardGopromptAdapter) SetState() {
 
 	if err != nil {
 		log.Println(err.Error())
+		return
 	}
 
 	y, err := strconv.Atoi(yStr)
 	if err != nil {
 		log.Println(err.Error())
+		return
 	}
 
 	s, err := strconv.Atoi(sStr)
 	if err != nil {
 		log.Println(err.Error())
+		return
 	}
 
 	ss := domain.State(s)
@@ -108,6 +111,7 @@ func (bpa *boardGopromptAdapter) SetState() {
 	ssc, err := in.NewSetStateCmd(x, y, ss)
 	if err != nil {
 		log.Println(err.Error())
+		return
 	}
 
 	err = bpa.setStateUseCase.SetState(ssc)
@@ -123,6 +127,7 @@ func (bpa *boardGopromptAdapter) WhoWin() {
 	winner, err := bpa.whoWinUseCase.WhoWin()
 	if err != nil {
 		log.Panicln(err.Error())
+		return
 	}
 
 	if winner == domain.Blank {

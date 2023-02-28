@@ -41,3 +41,8 @@ func (pba *playerBoardAdapter) ResetBoard() error {
 	err := pba.boardPlayerAdapter.ResetBoard()
 	return errors.Wrap(err, errInHere.Error())
 }
+
+func (pba *playerBoardAdapter) WhoWin() (domain.State, error) {
+	ds, err := pba.boardPlayerAdapter.WhoWin()
+	return domain.State(ds), errors.Wrap(err, errInHere.Error())
+}

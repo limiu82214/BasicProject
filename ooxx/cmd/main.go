@@ -27,6 +27,7 @@ func playerX() {
 		board_application.NewGetBoardState(ldba),
 		board_application.NewSetState(ldba),
 		board_application.NewResetBoardState(ldba),
+		board_application.NewWhoWin(ldba),
 	)
 
 	// 將 board adapter in player 注入到 player adapter out board
@@ -36,6 +37,7 @@ func playerX() {
 		player_application.NewGetBoardState(pb),
 		player_application.NewPutChess(pb),
 		player_application.NewResetBoard(pb),
+		player_application.NewWhoWin(pb),
 	)
 leave:
 	for {
@@ -47,6 +49,8 @@ leave:
 			gp.ShowBoard()
 		case "reset":
 			gp.ResetBoard()
+		case "winner":
+			gp.WhoWin()
 		case "q", "exit":
 			break leave
 		default:
