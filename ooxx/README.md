@@ -43,6 +43,7 @@ github.com/limiu82214/GoBasicProject/ooxx
 * [v] 加入player
 * [v] 要先設定玩家nick name才能玩
 * 這是一個插入的需求，他並不符合player本身的邏輯，但是符合業務需求，所以加在usecase
+* [] 導入CI
 * [] 整理，抽離共用，整理成固定的規則
     Err
     State
