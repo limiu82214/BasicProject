@@ -7,34 +7,20 @@ import (
 )
 
 type IBoardPlayerAdapter interface {
-	SetState(x, y int, s domain.State) error
-	WhoWin() (domain.State, error)
+	GetBoardState() ([3][3]domain.State, error)
 }
 
 type boardPlayerAdapter struct {
-	setStateUseCase in.ISetStateUseCase
-	whoWinUseCase   in.IWhoWinUseCase
+	getBoardUseCase in.IGetBoardStateUseCase
 }
 
-func NewBoardPlayerAdapter() IBoardPlayerAdapter {
-	return &boardPlayerAdapter{}
-}
-
-func (bpa *boardPlayerAdapter) SetState(x, y int, s domain.State) error {
-	ssc, err := in.NewSetStateCmd(x, y, s)
-	if err != nil {
-		return errors.Wrap(err, "SetState")
+func NewBoardPlayerAdapter(getBoardUseCase in.IGetBoardStateUseCase) IBoardPlayerAdapter {
+	return &boardPlayerAdapter{
+		getBoardUseCase: getBoardUseCase,
 	}
-
-	err = bpa.setStateUseCase.SetState(ssc)
-	if err != nil {
-		return errors.Wrap(err, "player_adapter setState")
-	}
-
-	return nil
 }
 
-func (bpa *boardPlayerAdapter) WhoWin() (domain.State, error) {
-	s, err := bpa.whoWinUseCase.WhoWin()
-	return s, errors.Wrap(err, "in adapter WhoWin")
+func (bpa *boardPlayerAdapter) GetBoardState() ([3][3]domain.State, error) {
+	bs, err := bpa.getBoardUseCase.GetBoardState()
+	return bs, errors.Wrap(err, "in player_adapter GetBoardState")
 }

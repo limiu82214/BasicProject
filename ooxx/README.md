@@ -23,6 +23,23 @@ github.com/limiu82214/GoBasicProject/ooxx
 * 好處：當你錯誤引用的時候，感覺蠻明顯的(EX:從service使直接import adapter.out的時候)
 * 判斷：LoadBoardPort不應像Board把方法拆出來，因為他並不是主要的業務邏輯，而是把資料存取的地方
 * 是否該在db的port也把一個個方法對應還是共用LoadPort就可以了。
+* 選擇：我可以在main直接做show board，也可以把這個方法丟到player裡面，然後再show board。
+    * 把show board在main呼叫，算不算跳過player↓
+        * player是所有呼叫的入口點嗎？否
+            * 邏輯是否會脫離範圍？否，僅單純呼叫
+            * player做下棋這件事情才正確？一半，看user透過player棋，還是user直接下棋
+        * 結：我希望user是透過player進行遊戲，而board屬於一個工具類型
+* ooxx當前記錄`ooxx0.1`：
+    board：
+        可以下棋與判斷輸贏等基本功能。
+        輸入：
+            prompt
+            player
+        輸出：leveldb
+    player
+        透過board的功能show棋盤。
+        輸入： prompt
+        輸出： board
 * [] 可以同時的多個board
 * [] 加入player
 * [] 由player輪流玩
@@ -43,3 +60,6 @@ github.com/limiu82214/GoBasicProject/ooxx
 ## Point
 
 * 六角架構
+
+## 額外原則
+* 如果兩個組件都是自己的，要實做in與out，在out的部份做資料轉換，因為out是使用方。
