@@ -36,3 +36,8 @@ func (pba *playerBoardAdapter) SetBoardState(x, y, s int) error {
 	err := pba.boardPlayerAdapter.SetState(x, y, s)
 	return errors.Wrap(err, errInHere.Error())
 }
+
+func (pba *playerBoardAdapter) ResetBoard() error {
+	err := pba.boardPlayerAdapter.ResetBoard()
+	return errors.Wrap(err, errInHere.Error())
+}

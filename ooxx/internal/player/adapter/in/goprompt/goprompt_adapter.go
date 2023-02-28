@@ -20,15 +20,18 @@ type IPlayerGopromptAdapter interface {
 type playerGopromptAdapter struct {
 	getBoardStateUseCase in.IGetBoardStateUseCase
 	putChessUseCase      in.IPutChessUseCase
+	resetBoardUseCase    in.IResetBoardUseCase
 }
 
 func NewPlayerGopromptAdapter(
 	getBoardStateUseCase in.IGetBoardStateUseCase,
 	putChessUseCase in.IPutChessUseCase,
+	resetBoardUseCase in.IResetBoardUseCase,
 ) IPlayerGopromptAdapter {
 	return &playerGopromptAdapter{
 		getBoardStateUseCase: getBoardStateUseCase,
 		putChessUseCase:      putChessUseCase,
+		resetBoardUseCase:    resetBoardUseCase,
 	}
 }
 
@@ -68,12 +71,12 @@ func (bpa *playerGopromptAdapter) ShowBoard() {
 }
 
 func (bpa *playerGopromptAdapter) ResetBoard() {
-	// err := bpa.resetPlayerStateUseCase.ResetPlayerState()
-	// if err != nil {
-	// 	log.Println(err.Error())
-	// } else {
-	// 	log.Println("sys: reset board state done.")
-	// }
+	err := bpa.resetBoardUseCase.ResetBoard()
+	if err != nil {
+		log.Println(err.Error())
+	} else {
+		log.Println("sys: reset board state done.")
+	}
 }
 
 func (bpa *playerGopromptAdapter) PutChess() {
