@@ -62,4 +62,5 @@ github.com/limiu82214/GoBasicProject/ooxx
 * 六角架構
 
 ## 額外原則
-* 如果兩個組件都是自己的，要實做in與out，在out的部份做資料轉換，因為out是使用方。
+* 如果兩個組件都是自己的，要實做in與out，提供功能那方把資料給出可用性高的格式，使用功能那方再把資料轉換成自己需要的格式。
+* 在每個地方增加 errInHere 給error wrap使用

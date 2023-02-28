@@ -7,6 +7,8 @@ import (
 	"github.com/pkg/errors"
 )
 
+var errInHere = errors.New("in player_adapter_out_board")
+
 type playerBoardAdapter struct {
 	boardPlayerAdapter player.IBoardPlayerAdapter
 }
@@ -27,5 +29,10 @@ func (pba *playerBoardAdapter) GetBoardState() ([3][3]domain.State, error) {
 		}
 	}
 
-	return newB, errors.Wrap(err, "in GetBoardState")
+	return newB, errors.Wrap(err, errInHere.Error())
+}
+
+func (pba *playerBoardAdapter) SetBoardState(x, y, s int) error {
+	err := pba.boardPlayerAdapter.SetState(x, y, s)
+	return errors.Wrap(err, errInHere.Error())
 }

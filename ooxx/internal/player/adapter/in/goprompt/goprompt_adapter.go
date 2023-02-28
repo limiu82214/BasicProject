@@ -3,10 +3,12 @@ package goprompt
 import (
 	"encoding/json"
 	"log"
+	"strconv"
 	"strings"
 
 	"github.com/c-bata/go-prompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/application/port/in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/domain"
 )
 
 type IPlayerGopromptAdapter interface {
@@ -17,11 +19,16 @@ type IPlayerGopromptAdapter interface {
 
 type playerGopromptAdapter struct {
 	getBoardStateUseCase in.IGetBoardStateUseCase
+	putChessUseCase      in.IPutChessUseCase
 }
 
-func NewPlayerGopromptAdapter(getBoardStateUseCase in.IGetBoardStateUseCase) IPlayerGopromptAdapter {
+func NewPlayerGopromptAdapter(
+	getBoardStateUseCase in.IGetBoardStateUseCase,
+	putChessUseCase in.IPutChessUseCase,
+) IPlayerGopromptAdapter {
 	return &playerGopromptAdapter{
 		getBoardStateUseCase: getBoardStateUseCase,
+		putChessUseCase:      putChessUseCase,
 	}
 }
 
@@ -32,6 +39,12 @@ func Completer(d prompt.Document) []prompt.Suggest {
 		{Text: "reset", Description: "reset board"},
 		{Text: "q", Description: "exit"},
 	}
+
+	return prompt.FilterHasPrefix(s, d.GetWordBeforeCursor(), true)
+}
+
+func nullCompleter(d prompt.Document) []prompt.Suggest {
+	s := []prompt.Suggest{}
 
 	return prompt.FilterHasPrefix(s, d.GetWordBeforeCursor(), true)
 }
@@ -64,37 +77,36 @@ func (bpa *playerGopromptAdapter) ResetBoard() {
 }
 
 func (bpa *playerGopromptAdapter) PutChess() {
-	// xStr := prompt.Input("x: ", nullCompleter)
-	// yStr := prompt.Input("y: ", nullCompleter)
-	// sStr := prompt.Input("state: ", nullCompleter)
-	// x, err := strconv.Atoi(xStr)
+	xStr := prompt.Input("x: ", nullCompleter)
+	yStr := prompt.Input("y: ", nullCompleter)
+	sStr := prompt.Input("state: ", nullCompleter)
+	x, err := strconv.Atoi(xStr)
 
-	// if err != nil {
-	// 	log.Println(err.Error())
-	// }
+	if err != nil {
+		log.Println(err.Error())
+	}
 
-	// y, err := strconv.Atoi(yStr)
-	// if err != nil {
-	// 	log.Println(err.Error())
-	// }
+	y, err := strconv.Atoi(yStr)
+	if err != nil {
+		log.Println(err.Error())
+	}
 
-	// s, err := strconv.Atoi(sStr)
-	// if err != nil {
-	// 	log.Println(err.Error())
-	// }
+	s, err := strconv.Atoi(sStr)
+	if err != nil {
+		log.Println(err.Error())
+	}
 
-	// ss := domain.State(s)
+	ss := domain.State(s)
 
-	// ssc, err := in.NewSetStateCmd(x, y, ss)
-	// if err != nil {
-	// 	log.Println(err.Error())
-	// }
+	ssc, err := in.NewPutChessCmd(x, y, ss)
+	if err != nil {
+		log.Println(err.Error())
+	}
 
-	// err = bpa.setStateUseCase.SetState(ssc)
-	// if err != nil {
-	// 	log.Printf("sys: %s", err.Error())
-	// } else {
-	// 	bpa.ShowPlayer()
-	// 	log.Printf("sys: [%d][%d] will be %d.", x, y, s)
-	// }
+	err = bpa.putChessUseCase.PutChess(ssc)
+	if err != nil {
+		log.Printf("sys: %s", err.Error())
+	} else {
+		log.Printf("sys: [%d][%d] will be %d.", x, y, s)
+	}
 }
