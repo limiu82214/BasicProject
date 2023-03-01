@@ -1,4 +1,4 @@
-name: Go ooxx CI
+name: ooxxCI
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build and test
+    name: ooxxGolangci-lint
     runs-on: ubuntu-latest
 
     steps:
