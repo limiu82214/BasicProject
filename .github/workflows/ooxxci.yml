@@ -1,4 +1,4 @@
-name: Go ooxx CI
+name: ooxxCI
 
 on:
   pull_request:
