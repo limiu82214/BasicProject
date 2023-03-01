@@ -1,9 +1,6 @@
 name: Go ooxx CI
 
 on:
-  push:
-    branches:
-      - ooxxFeature
   pull_request:
     branches:
       - ooxx
