@@ -19,9 +19,5 @@ func NewGetBoardState(boardPort out.IBoardPort) in.IGetBoardStateUseCase {
 
 func (gbs *getBoardState) GetBoardState() ([3][3]domain.State, error) {
 	tmpB, err := gbs.boardPort.GetBoardState()
-	// 未通過lint測試
-	// 未通過lint測試
-	// 未通過lint測試
-	// 未通過lint測試
 	return tmpB, errors.Wrap(err, "in GetBoardState")
 }
