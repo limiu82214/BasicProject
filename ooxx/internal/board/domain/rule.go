@@ -1,6 +1,6 @@
 package domain
 
-import "errors"
+import "github.com/pkg/errors"
 
 type iRule interface {
 	whoWin(b *Board) State

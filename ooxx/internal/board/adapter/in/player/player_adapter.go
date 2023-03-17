@@ -5,6 +5,7 @@ import (
 
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/pkg/nerror"
 	"github.com/pkg/errors"
 )
 
@@ -48,7 +49,7 @@ func (bpa *boardPlayerAdapter) SetState(x, y, s int) error {
 
 	ssc, err := in.NewSetStateCmd(x, y, ss)
 	if err != nil {
-		log.Println(err.Error())
+		log.Printf("%v\n", nerror.PrettyError(err))
 	}
 
 	err = bpa.setStateUseCase.SetState(ssc)

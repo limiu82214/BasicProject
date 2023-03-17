@@ -1,7 +1,7 @@
 package in
 
 import (
-	"errors"
+	"github.com/pkg/errors"
 
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/domain"
 )

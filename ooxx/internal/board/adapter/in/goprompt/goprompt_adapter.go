@@ -9,6 +9,7 @@ import (
 	"github.com/c-bata/go-prompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/pkg/nerror"
 )
 
 type IBoardGopromptAdapter interface {
@@ -59,13 +60,13 @@ func nullCompleter(d prompt.Document) []prompt.Suggest {
 func (bpa *boardGopromptAdapter) ShowBoard() {
 	bs, err := bpa.getBoardStateUseCase.GetBoardState()
 	if err != nil {
-		log.Println(err.Error())
+		log.Printf("%v\n", nerror.PrettyError(err))
 		return
 	}
 
 	b, err := json.Marshal(bs)
 	if err != nil {
-		log.Println(err.Error())
+		log.Printf("%v\n", nerror.PrettyError(err))
 		return
 	}
 
@@ -77,7 +78,7 @@ func (bpa *boardGopromptAdapter) ShowBoard() {
 func (bpa *boardGopromptAdapter) ResetBoard() {
 	err := bpa.resetBoardStateUseCase.ResetBoardState()
 	if err != nil {
-		log.Println(err.Error())
+		log.Printf("%v\n", nerror.PrettyError(err))
 	} else {
 		log.Println("sys: reset board state done.")
 	}
@@ -90,19 +91,19 @@ func (bpa *boardGopromptAdapter) SetState() {
 	x, err := strconv.Atoi(xStr)
 
 	if err != nil {
-		log.Println(err.Error())
+		log.Printf("%v\n", nerror.PrettyError(err))
 		return
 	}
 
 	y, err := strconv.Atoi(yStr)
 	if err != nil {
-		log.Println(err.Error())
+		log.Printf("%v\n", nerror.PrettyError(err))
 		return
 	}
 
 	s, err := strconv.Atoi(sStr)
 	if err != nil {
-		log.Println(err.Error())
+		log.Printf("%v\n", nerror.PrettyError(err))
 		return
 	}
 
@@ -110,7 +111,7 @@ func (bpa *boardGopromptAdapter) SetState() {
 
 	ssc, err := in.NewSetStateCmd(x, y, ss)
 	if err != nil {
-		log.Println(err.Error())
+		log.Printf("%v\n", nerror.PrettyError(err))
 		return
 	}
 

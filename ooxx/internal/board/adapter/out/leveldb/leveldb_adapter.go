@@ -46,6 +46,7 @@ func (bldba *boardLevelDBAdapter) SetBoard(b domain.IBoard) error {
 func (bldba *boardLevelDBAdapter) GetBoard() (domain.IBoard, error) {
 	id := []byte("board_once")
 
+	return nil, errors.New("message string")
 	data, err := bldba.db.Get(id, nil)
 	if err != nil {
 		if errors.Is(err, leveldb.ErrNotFound) {

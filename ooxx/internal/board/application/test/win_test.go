@@ -11,6 +11,7 @@ import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/leveldb"
+	"github.com/limiu82214/GoBasicProject/ooxx/pkg/nerror"
 )
 
 func Test_setState_SetState(t *testing.T) {
@@ -21,7 +22,7 @@ func Test_setState_SetState(t *testing.T) {
 	showBoard := func(bs [3][3]domain.State) {
 		b, err := json.Marshal(bs)
 		if err != nil {
-			log.Println(err.Error())
+			log.Printf("%v\n", nerror.PrettyError(err))
 		}
 
 		ans := string(b[1 : len(b)-1])
@@ -39,16 +40,16 @@ func Test_setState_SetState(t *testing.T) {
 	for _, t := range tt {
 		cmd, err := in.NewSetStateCmd(t[0], t[1], domain.State(t[2]))
 		if err != nil {
-			log.Println(err.Error())
+			log.Printf("%v\n", nerror.PrettyError(err))
 		}
 
 		err = nss.SetState(cmd)
 		if err != nil {
-			log.Println(err.Error())
+			log.Printf("%v\n", nerror.PrettyError(err))
 		} else {
 			bs, err := ngbs.GetBoardState()
 			if err != nil {
-				log.Println(err.Error())
+				log.Printf("%v\n", nerror.PrettyError(err))
 			} else {
 				showBoard(bs)
 			}
