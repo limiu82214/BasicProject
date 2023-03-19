@@ -1,4 +1,4 @@
-package leveldb
+package board_adapter_out_leveldb
 
 import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/out"
@@ -17,7 +17,7 @@ type boardLevelDBAdapter struct {
 	db *leveldb.DB
 }
 
-func NewBoardLevelDBAdapter(db *leveldb.DB) out.ILoadBoardPort {
+func New(db *leveldb.DB) out.ILoadBoardPort {
 	return &boardLevelDBAdapter{
 		db: db,
 	}

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	leveldb_adapter "github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/out/leveldb"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/out/board_adapter_out_leveldb"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
@@ -16,7 +16,7 @@ import (
 
 func Test_setState_SetState(t *testing.T) {
 	db := leveldb.GetInst()
-	ldba := leveldb_adapter.NewBoardLevelDBAdapter(db)
+	ldba := board_adapter_out_leveldb.New(db)
 	nss := application.NewSetState(ldba)
 	ngbs := application.NewGetBoardState(ldba)
 	showBoard := func(bs [3][3]domain.State) {

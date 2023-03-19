@@ -6,7 +6,7 @@ import (
 	"github.com/c-bata/go-prompt"
 	board_in_goprompt "github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/in/goprompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/in/player"
-	board_in_leveldb_adapter "github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/out/leveldb"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/out/board_adapter_out_leveldb"
 	board_application "github.com/limiu82214/GoBasicProject/ooxx/internal/board/application"
 	player_in_goprompt "github.com/limiu82214/GoBasicProject/ooxx/internal/player/adapter/in/goprompt"
 	player_board "github.com/limiu82214/GoBasicProject/ooxx/internal/player/adapter/out/board"
@@ -21,7 +21,7 @@ func main() {
 func playerX() {
 	// 做一個 board adapter in player
 	db := leveldb.GetInst()
-	bldba := board_in_leveldb_adapter.NewBoardLevelDBAdapter(db)
+	bldba := board_adapter_out_leveldb.New(db)
 	nbpa := player.NewBoardPlayerAdapter(
 		board_application.NewGetBoardState(bldba),
 		board_application.NewSetState(bldba),
@@ -64,7 +64,7 @@ leave:
 
 func boardX() { //nolint:unused // for test
 	db := leveldb.GetInst()
-	ldba := board_in_leveldb_adapter.NewBoardLevelDBAdapter(db)
+	ldba := board_adapter_out_leveldb.New(db)
 	gp := board_in_goprompt.NewBoardGopromptAdapter(
 		board_application.NewSetState(ldba),
 		board_application.NewWhoWin(ldba),
