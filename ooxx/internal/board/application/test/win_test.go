@@ -8,7 +8,7 @@ import (
 
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/out/board_adapter_out_leveldb"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/board_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/leveldb"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/nerror"
@@ -38,7 +38,7 @@ func Test_setState_SetState(t *testing.T) {
 		{2, 2, 1},
 	}
 	for _, t := range tt {
-		cmd, err := in.NewSetStateCmd(t[0], t[1], domain.State(t[2]))
+		cmd, err := board_application_port_in.NewSetStateCmd(t[0], t[1], domain.State(t[2]))
 		if err != nil {
 			log.Printf("%v\n", nerror.PrettyError(err))
 		}

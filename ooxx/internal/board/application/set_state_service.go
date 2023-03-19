@@ -1,7 +1,7 @@
 package application
 
 import (
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/board_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
 	"github.com/pkg/errors"
@@ -11,13 +11,13 @@ type setState struct {
 	loadBoardPort out.ILoadBoardPort
 }
 
-func NewSetState(loadBoardPort out.ILoadBoardPort) in.ISetStateUseCase {
+func NewSetState(loadBoardPort out.ILoadBoardPort) board_application_port_in.ISetStateUseCase {
 	return &setState{
 		loadBoardPort: loadBoardPort,
 	}
 }
 
-func (ss *setState) SetState(cmd *in.SetStateCmd) error {
+func (ss *setState) SetState(cmd *board_application_port_in.SetStateCmd) error {
 	if !cmd.IsValid() {
 		panic("檢查是本基")
 	}

@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/c-bata/go-prompt"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/board_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/nerror"
 )
@@ -20,17 +20,17 @@ type IBoardGopromptAdapter interface {
 }
 
 type boardGopromptAdapter struct {
-	setStateUseCase        in.ISetStateUseCase
-	whoWinUseCase          in.IWhoWinUseCase
-	getBoardStateUseCase   in.IGetBoardStateUseCase
-	resetBoardStateUseCase in.IResetBoardStateUseCase
+	setStateUseCase        board_application_port_in.ISetStateUseCase
+	whoWinUseCase          board_application_port_in.IWhoWinUseCase
+	getBoardStateUseCase   board_application_port_in.IGetBoardStateUseCase
+	resetBoardStateUseCase board_application_port_in.IResetBoardStateUseCase
 }
 
 func New(
-	setStateUserCase in.ISetStateUseCase,
-	whoWinUseCase in.IWhoWinUseCase,
-	getBoardStateUseCase in.IGetBoardStateUseCase,
-	resetBoardStateUseCase in.IResetBoardStateUseCase,
+	setStateUserCase board_application_port_in.ISetStateUseCase,
+	whoWinUseCase board_application_port_in.IWhoWinUseCase,
+	getBoardStateUseCase board_application_port_in.IGetBoardStateUseCase,
+	resetBoardStateUseCase board_application_port_in.IResetBoardStateUseCase,
 ) IBoardGopromptAdapter {
 	return &boardGopromptAdapter{
 		setStateUseCase:        setStateUserCase,
@@ -109,7 +109,7 @@ func (bpa *boardGopromptAdapter) SetState() {
 
 	ss := domain.State(s)
 
-	ssc, err := in.NewSetStateCmd(x, y, ss)
+	ssc, err := board_application_port_in.NewSetStateCmd(x, y, ss)
 	if err != nil {
 		log.Printf("%v\n", nerror.PrettyError(err))
 		return

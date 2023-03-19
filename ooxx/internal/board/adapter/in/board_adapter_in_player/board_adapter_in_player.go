@@ -3,7 +3,7 @@ package board_adapter_in_player
 import (
 	"log"
 
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/board_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/nerror"
 	"github.com/pkg/errors"
@@ -19,17 +19,17 @@ type IBoardPlayerAdapter interface {
 }
 
 type boardPlayerAdapter struct {
-	getBoardUseCase        in.IGetBoardStateUseCase
-	setStateUseCase        in.ISetStateUseCase
-	resetBoardStateUseCase in.IResetBoardStateUseCase
-	whoWinUseCase          in.IWhoWinUseCase
+	getBoardUseCase        board_application_port_in.IGetBoardStateUseCase
+	setStateUseCase        board_application_port_in.ISetStateUseCase
+	resetBoardStateUseCase board_application_port_in.IResetBoardStateUseCase
+	whoWinUseCase          board_application_port_in.IWhoWinUseCase
 }
 
 func New(
-	getBoardUseCase in.IGetBoardStateUseCase,
-	setStateUseCase in.ISetStateUseCase,
-	resetBoardStateUseCase in.IResetBoardStateUseCase,
-	whoWinUseCase in.IWhoWinUseCase,
+	getBoardUseCase board_application_port_in.IGetBoardStateUseCase,
+	setStateUseCase board_application_port_in.ISetStateUseCase,
+	resetBoardStateUseCase board_application_port_in.IResetBoardStateUseCase,
+	whoWinUseCase board_application_port_in.IWhoWinUseCase,
 ) IBoardPlayerAdapter {
 	return &boardPlayerAdapter{
 		getBoardUseCase:        getBoardUseCase,
@@ -47,7 +47,7 @@ func (bpa *boardPlayerAdapter) GetBoardState() ([3][3]domain.State, error) {
 func (bpa *boardPlayerAdapter) SetState(x, y, s int) error {
 	ss := domain.State(s)
 
-	ssc, err := in.NewSetStateCmd(x, y, ss)
+	ssc, err := board_application_port_in.NewSetStateCmd(x, y, ss)
 	if err != nil {
 		log.Printf("%v\n", nerror.PrettyError(err))
 	}
