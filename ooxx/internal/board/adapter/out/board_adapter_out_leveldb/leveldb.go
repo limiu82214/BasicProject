@@ -1,7 +1,7 @@
 package board_adapter_out_leveldb
 
 import (
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/out"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/board_application_port_out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/gob"
 	"github.com/pkg/errors"
@@ -17,7 +17,7 @@ type boardLevelDBAdapter struct {
 	db *leveldb.DB
 }
 
-func New(db *leveldb.DB) out.ILoadBoardPort {
+func New(db *leveldb.DB) board_application_port_out.ILoadBoardPort {
 	return &boardLevelDBAdapter{
 		db: db,
 	}

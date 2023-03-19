@@ -2,16 +2,16 @@ package application
 
 import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/board_application_port_in"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/out"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/board_application_port_out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
 	"github.com/pkg/errors"
 )
 
 type whoWin struct {
-	loadBoardPort out.ILoadBoardPort
+	loadBoardPort board_application_port_out.ILoadBoardPort
 }
 
-func NewWhoWin(loadBoardPort out.ILoadBoardPort) board_application_port_in.IWhoWinUseCase {
+func NewWhoWin(loadBoardPort board_application_port_out.ILoadBoardPort) board_application_port_in.IWhoWinUseCase {
 	return &whoWin{
 		loadBoardPort: loadBoardPort,
 	}
