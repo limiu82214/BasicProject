@@ -55,6 +55,10 @@ github.com/limiu82214/GoBasicProject/ooxx
     命名規劃
         為了使引用變的容易，取捨後決定讓資料夾名稱有重覆
             所有會被引用的package依照六角結構命名
+            application New+完整名稱
+            其他只用New
+    Wire
+        使用Wire注入
     State
     Board與Player結構比對
 * [] 由player輪流玩

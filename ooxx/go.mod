@@ -10,10 +10,14 @@ require (
 
 require (
 	github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db // indirect
+	github.com/google/subcommands v1.0.1 // indirect
+	github.com/google/wire v0.5.0 // indirect
 	github.com/mattn/go-colorable v0.1.7 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/mattn/go-tty v0.0.3 // indirect
 	github.com/pkg/term v1.2.0-beta.2 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	golang.org/x/sys v0.0.0-20210806184541-e5e7981a1069 // indirect
+	golang.org/x/tools v0.0.0-20190422233926-fe54fb35175b // indirect
 )
