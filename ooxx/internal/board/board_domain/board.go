@@ -1,14 +1,15 @@
 package board_domain
 
 import (
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
 	"github.com/pkg/errors"
 )
 
 type IBoard interface {
-	GetBoardState() [3][3]State
+	GetBoardState() [3][3]shared.State
 	ResetBoardState()
-	SetState(x, y int, s State) error
-	WhoWin() State
+	SetState(x, y int, s shared.State) error
+	WhoWin() shared.State
 	SetBoardStatus(bs *BoardStatus) error
 	GetBoardStatus() (BoardStatus, error)
 }
@@ -35,10 +36,10 @@ func (b *Board) ResetBoardState() {
 		}
 	}
 
-	b.boardStatus.LastState = Blank
+	b.boardStatus.LastState = shared.Blank
 }
 
-func (b *Board) GetBoardState() [3][3]State {
+func (b *Board) GetBoardState() [3][3]shared.State {
 	return b.boardStatus.Board
 }
 
@@ -52,7 +53,7 @@ func (b *Board) SetBoardStatus(bs *BoardStatus) error {
 	return nil
 }
 
-func (b *Board) SetState(x, y int, s State) error {
+func (b *Board) SetState(x, y int, s shared.State) error {
 	err := b.rule.setState(b, x, y, s)
 	if err != nil {
 		return errors.Wrap(err, ErrSetState.Error())
@@ -63,6 +64,6 @@ func (b *Board) SetState(x, y int, s State) error {
 	return nil
 }
 
-func (b *Board) WhoWin() State {
+func (b *Board) WhoWin() shared.State {
 	return b.rule.whoWin(b)
 }

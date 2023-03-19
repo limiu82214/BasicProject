@@ -47,7 +47,7 @@ github.com/limiu82214/GoBasicProject/ooxx
     ooxx不能進行push。
     開發分支要合併到ooxx必需發起Pull Request。
     開發分支必需通過golangci-lint才能merge進ooxx。
-* [] 整理，抽離共用，整理成固定的規則
+* [v] 整理，抽離共用，整理成固定的規則
     Err
         統一使用 github.com/pkg/errors
         一致使用errors.Wrap與errors.New (重覆Wrap會成加記憶體等成本，但是書寫時可以避免需要判斷上下文有沒有Wrap過的問題)
@@ -61,6 +61,7 @@ github.com/limiu82214/GoBasicProject/ooxx
         使用Wire注入
             將DB，UseCase做成Set
     State
+        將State分離出來(因為目前player與board都有用到state)
     Board與Player結構比對
 * [] 由player輪流玩
 * [] 加入三戰兩勝的機制

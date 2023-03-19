@@ -4,6 +4,7 @@ import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
 	"github.com/pkg/errors"
 )
 
@@ -44,7 +45,7 @@ func (s *setStateUseCase) SetState(cmd *board_application_port_in.SetStateCmd) e
 	}
 
 	whoWin := board.WhoWin()
-	if whoWin != board_domain.Blank {
+	if whoWin != shared.Blank {
 		board.ResetBoardState()
 
 		return errors.Errorf("winner is %d", whoWin)
