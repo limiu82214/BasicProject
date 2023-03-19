@@ -17,7 +17,7 @@ type boardLevelDBAdapter struct {
 	db *leveldb.DB
 }
 
-func New(db *leveldb.DB) board_application_port_out.ILoadBoardPort {
+func New(db *leveldb.DB) board_application_port_out.ILoadBoardAdapter {
 	return &boardLevelDBAdapter{
 		db: db,
 	}

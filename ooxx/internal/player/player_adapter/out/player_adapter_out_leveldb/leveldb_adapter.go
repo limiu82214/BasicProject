@@ -18,7 +18,7 @@ type playerLevelDBAdapter struct {
 	db *leveldb.DB
 }
 
-func New(db *leveldb.DB) player_adapter_port_out.ILoadPlayerPort {
+func New(db *leveldb.DB) player_adapter_port_out.ILoadPlayerAdapter {
 	return &playerLevelDBAdapter{
 		db: db,
 	}

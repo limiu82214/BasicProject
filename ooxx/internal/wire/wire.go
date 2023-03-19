@@ -1,4 +1,5 @@
-// // +build wireinject
+//go:build wireinject
+// +build wireinject
 
 package wire
 
@@ -40,10 +41,10 @@ func InitBoardAdapterInGoPrompt() board_adapter_in_goprompt.IBoardGopromptAdapte
 	panic(wire.Build(
 		leveldb.GetInst,
 		board_adapter_out_leveldb.New,
-		board_application.NewGetBoardStateUseCase,
 		board_application.NewSetStateUseCase,
-		board_application.NewResetBoardStateUseCase,
 		board_application.NewWhoWinUseCase,
+		board_application.NewGetBoardStateUseCase,
+		board_application.NewResetBoardStateUseCase,
 		board_adapter_in_goprompt.New,
 	))
 }

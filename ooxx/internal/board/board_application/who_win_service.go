@@ -8,10 +8,10 @@ import (
 )
 
 type whoWin struct {
-	loadBoardPort board_application_port_out.ILoadBoardPort
+	loadBoardPort board_application_port_out.ILoadBoardAdapter
 }
 
-func NewWhoWinUseCase(loadBoardPort board_application_port_out.ILoadBoardPort) board_application_port_in.IWhoWinUseCase {
+func NewWhoWinUseCase(loadBoardPort board_application_port_out.ILoadBoardAdapter) board_application_port_in.IWhoWinUseCase {
 	return &whoWin{
 		loadBoardPort: loadBoardPort,
 	}

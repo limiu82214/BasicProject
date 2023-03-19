@@ -8,11 +8,11 @@ import (
 )
 
 type setPlayerInfo struct {
-	loadPlayerPort player_adapter_port_out.ILoadPlayerPort
+	loadPlayerPort player_adapter_port_out.ILoadPlayerAdapter
 }
 
 func NewSetPlayerInfoUseCase(
-	loadPlayerPort player_adapter_port_out.ILoadPlayerPort,
+	loadPlayerPort player_adapter_port_out.ILoadPlayerAdapter,
 ) player_application_port_in.ISetPlayerInfoUseCase {
 	return &setPlayerInfo{
 		loadPlayerPort: loadPlayerPort,

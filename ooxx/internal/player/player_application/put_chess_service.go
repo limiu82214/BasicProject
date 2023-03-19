@@ -11,13 +11,13 @@ var errInHere = errors.New("in player_application")
 var errShouldSetNicknameFirst = errors.New("should set nickname first")
 
 type putChess struct {
-	boardPort      player_adapter_port_out.IBoardPort
-	loadPlayerPort player_adapter_port_out.ILoadPlayerPort
+	boardPort      player_adapter_port_out.IBoardAdapter
+	loadPlayerPort player_adapter_port_out.ILoadPlayerAdapter
 }
 
 func NewPutChessUseCase(
-	boardPort player_adapter_port_out.IBoardPort,
-	loadPlayerPort player_adapter_port_out.ILoadPlayerPort,
+	boardPort player_adapter_port_out.IBoardAdapter,
+	loadPlayerPort player_adapter_port_out.ILoadPlayerAdapter,
 ) player_application_port_in.IPutChessUseCase {
 	return &putChess{
 		boardPort:      boardPort,

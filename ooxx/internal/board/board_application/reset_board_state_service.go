@@ -8,10 +8,10 @@ import (
 )
 
 type resetBoardState struct {
-	loadBoardPort board_application_port_out.ILoadBoardPort
+	loadBoardPort board_application_port_out.ILoadBoardAdapter
 }
 
-func NewResetBoardStateUseCase(loadBoardPort board_application_port_out.ILoadBoardPort) board_application_port_in.IResetBoardStateUseCase {
+func NewResetBoardStateUseCase(loadBoardPort board_application_port_out.ILoadBoardAdapter) board_application_port_in.IResetBoardStateUseCase {
 	return &resetBoardState{
 		loadBoardPort: loadBoardPort,
 	}

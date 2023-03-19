@@ -8,10 +8,10 @@ import (
 )
 
 type getBoardState struct {
-	boardPort player_adapter_port_out.IBoardPort
+	boardPort player_adapter_port_out.IBoardAdapter
 }
 
-func NewGetBoardStateUseCase(boardPort player_adapter_port_out.IBoardPort) player_application_port_in.IGetBoardStateUseCase {
+func NewGetBoardStateUseCase(boardPort player_adapter_port_out.IBoardAdapter) player_application_port_in.IGetBoardStateUseCase {
 	return &getBoardState{
 		boardPort: boardPort,
 	}

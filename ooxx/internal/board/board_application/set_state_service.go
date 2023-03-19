@@ -8,10 +8,10 @@ import (
 )
 
 type setState struct {
-	loadBoardPort board_application_port_out.ILoadBoardPort
+	loadBoardPort board_application_port_out.ILoadBoardAdapter
 }
 
-func NewSetStateUseCase(loadBoardPort board_application_port_out.ILoadBoardPort) board_application_port_in.ISetStateUseCase {
+func NewSetStateUseCase(loadBoardPort board_application_port_out.ILoadBoardAdapter) board_application_port_in.ISetStateUseCase {
 	return &setState{
 		loadBoardPort: loadBoardPort,
 	}
