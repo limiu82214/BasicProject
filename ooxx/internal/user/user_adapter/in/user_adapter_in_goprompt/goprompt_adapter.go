@@ -1,4 +1,4 @@
-package player_adapter_in_goprompt
+package user_adapter_in_goprompt
 
 import (
 	"encoding/json"
@@ -7,12 +7,12 @@ import (
 	"strings"
 
 	"github.com/c-bata/go-prompt"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/user/user_application/port/user_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/user/user_application/port/user_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/nerror"
 )
 
-type IPlayerGopromptAdapter interface {
+type IUserGopromptAdapter interface {
 	PutChess()
 	ShowBoard()
 	ResetBoard()
@@ -20,7 +20,7 @@ type IPlayerGopromptAdapter interface {
 	SetPlayerInfo()
 }
 
-type playerGopromptAdapter struct {
+type userGopromptAdapter struct {
 	getBoardStateUseCase user_application_port_in.IGetBoardStateUseCase
 	putChessUseCase      user_application_port_in.IPutChessUseCase
 	resetBoardUseCase    user_application_port_in.IResetBoardUseCase
@@ -34,8 +34,8 @@ func New(
 	resetBoardUseCase user_application_port_in.IResetBoardUseCase,
 	whoWinUseCase user_application_port_in.IWhoWinUseCase,
 	setPlayerInfoUseCase user_application_port_in.ISetPlayerInfoUseCase,
-) IPlayerGopromptAdapter {
-	return &playerGopromptAdapter{
+) IUserGopromptAdapter {
+	return &userGopromptAdapter{
 		getBoardStateUseCase: getBoardStateUseCase,
 		putChessUseCase:      putChessUseCase,
 		resetBoardUseCase:    resetBoardUseCase,
@@ -63,7 +63,7 @@ func nullCompleter(d prompt.Document) []prompt.Suggest {
 	return prompt.FilterHasPrefix(s, d.GetWordBeforeCursor(), true)
 }
 
-func (bpa *playerGopromptAdapter) ShowBoard() {
+func (bpa *userGopromptAdapter) ShowBoard() {
 	bs, err := bpa.getBoardStateUseCase.GetBoardState()
 	if err != nil {
 		log.Printf("%v\n", nerror.PrettyError(err))
@@ -81,7 +81,7 @@ func (bpa *playerGopromptAdapter) ShowBoard() {
 	log.Println(ans)
 }
 
-func (bpa *playerGopromptAdapter) ResetBoard() {
+func (bpa *userGopromptAdapter) ResetBoard() {
 	err := bpa.resetBoardUseCase.ResetBoard()
 	if err != nil {
 		log.Printf("%v\n", nerror.PrettyError(err))
@@ -90,7 +90,7 @@ func (bpa *playerGopromptAdapter) ResetBoard() {
 	}
 }
 
-func (bpa *playerGopromptAdapter) PutChess() {
+func (bpa *userGopromptAdapter) PutChess() {
 	nickname := prompt.Input("nickname: ", nullCompleter)
 	xStr := prompt.Input("x: ", nullCompleter)
 	yStr := prompt.Input("y: ", nullCompleter)
@@ -130,7 +130,7 @@ func (bpa *playerGopromptAdapter) PutChess() {
 	}
 }
 
-func (bpa *playerGopromptAdapter) WhoWin() {
+func (bpa *userGopromptAdapter) WhoWin() {
 	winner, err := bpa.whoWinUseCase.WhoWin()
 	if err != nil {
 		log.Panicln(err.Error())
@@ -144,7 +144,7 @@ func (bpa *playerGopromptAdapter) WhoWin() {
 	}
 }
 
-func (bpa *playerGopromptAdapter) SetPlayerInfo() {
+func (bpa *userGopromptAdapter) SetPlayerInfo() {
 	nickname := prompt.Input("Nickname len(1~3): ", nullCompleter)
 
 	cmd, err := user_application_port_in.NewSetPlayerInfoCmd(nickname)

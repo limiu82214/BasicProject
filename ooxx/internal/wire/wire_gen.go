@@ -12,8 +12,8 @@ import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/game/game_adapter/in/game_adapter_in_player"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/game/game_adapter/out/game_adapter_out_leveldb"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/game/game_application"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/user/user_adapter/in/player_adapter_in_goprompt"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/user/user_adapter/out/user_adapter_out_board"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/user/user_adapter/in/user_adapter_in_goprompt"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/user/user_adapter/out/user_adapter_out_game"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/user/user_adapter/out/user_adapter_out_leveldb"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/user/user_application"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/leveldb"
@@ -21,7 +21,7 @@ import (
 
 // Injectors from wire.go:
 
-func InitPlayerAdapterInGoPrompt() player_adapter_in_goprompt.IPlayerGopromptAdapter {
+func InitUserAdapterInGoPrompt() user_adapter_in_goprompt.IUserGopromptAdapter {
 	db := leveldb.GetInst()
 	iLoadBoardAdapter := game_adapter_out_leveldb.New(db)
 	iGetBoardStateUseCase := game_application.NewGetBoardStateUseCase(iLoadBoardAdapter)
@@ -29,15 +29,15 @@ func InitPlayerAdapterInGoPrompt() player_adapter_in_goprompt.IPlayerGopromptAda
 	iResetBoardStateUseCase := game_application.NewResetBoardStateUseCase(iLoadBoardAdapter)
 	iWhoWinUseCase := game_application.NewWhoWinUseCase(iLoadBoardAdapter)
 	iBoardPlayerAdapter := game_adapter_in_player.New(iGetBoardStateUseCase, iSetStateUseCase, iResetBoardStateUseCase, iWhoWinUseCase)
-	iBoardAdapter := user_adapter_out_board.New(iBoardPlayerAdapter)
-	player_application_port_inIGetBoardStateUseCase := user_application.NewGetBoardStateUseCase(iBoardAdapter)
+	iBoardAdapter := user_adapter_out_game.New(iBoardPlayerAdapter)
+	user_application_port_inIGetBoardStateUseCase := user_application.NewGetBoardStateUseCase(iBoardAdapter)
 	iLoadPlayerAdapter := user_adapter_out_leveldb.New(db)
 	iPutChessUseCase := user_application.NewPutChessUseCase(iBoardAdapter, iLoadPlayerAdapter)
 	iResetBoardUseCase := user_application.NewResetBoardUseCase(iBoardAdapter)
-	player_application_port_inIWhoWinUseCase := user_application.NewWhoWinUseCase(iBoardAdapter)
+	user_application_port_inIWhoWinUseCase := user_application.NewWhoWinUseCase(iBoardAdapter)
 	iSetPlayerInfoUseCase := user_application.NewSetPlayerInfoUseCase(iLoadPlayerAdapter)
-	iPlayerGopromptAdapter := player_adapter_in_goprompt.New(player_application_port_inIGetBoardStateUseCase, iPutChessUseCase, iResetBoardUseCase, player_application_port_inIWhoWinUseCase, iSetPlayerInfoUseCase)
-	return iPlayerGopromptAdapter
+	iUserGopromptAdapter := user_adapter_in_goprompt.New(user_application_port_inIGetBoardStateUseCase, iPutChessUseCase, iResetBoardUseCase, user_application_port_inIWhoWinUseCase, iSetPlayerInfoUseCase)
+	return iUserGopromptAdapter
 }
 
 func InitBoardAdapterInGoPrompt() game_adapter_in_goprompt.IBoardGopromptAdapter {
@@ -57,4 +57,4 @@ var DBSet = wire.NewSet(leveldb.GetInst)
 
 var BoardApplicationSet = wire.NewSet(game_application.NewGetBoardStateUseCase, game_application.NewSetStateUseCase, game_application.NewResetBoardStateUseCase, game_application.NewWhoWinUseCase)
 
-var PlayerApplicationSet = wire.NewSet(user_application.NewGetBoardStateUseCase, user_application.NewPutChessUseCase, user_application.NewResetBoardUseCase, user_application.NewWhoWinUseCase, user_application.NewSetPlayerInfoUseCase)
+var UserApplicationSet = wire.NewSet(user_application.NewGetBoardStateUseCase, user_application.NewPutChessUseCase, user_application.NewResetBoardUseCase, user_application.NewWhoWinUseCase, user_application.NewSetPlayerInfoUseCase)

@@ -5,7 +5,7 @@ import (
 
 	"github.com/c-bata/go-prompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/game/game_adapter/in/game_adapter_in_goprompt"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/user/user_adapter/in/player_adapter_in_goprompt"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/user/user_adapter/in/user_adapter_in_goprompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/wire"
 )
 
@@ -13,10 +13,10 @@ func main() {
 	playerX()
 }
 func playerX() {
-	gp := wire.InitPlayerAdapterInGoPrompt()
+	gp := wire.InitUserAdapterInGoPrompt()
 leave:
 	for {
-		t := prompt.Input("action: ", player_adapter_in_goprompt.Completer)
+		t := prompt.Input("action: ", user_adapter_in_goprompt.Completer)
 		switch t {
 		case "put":
 			gp.PutChess()

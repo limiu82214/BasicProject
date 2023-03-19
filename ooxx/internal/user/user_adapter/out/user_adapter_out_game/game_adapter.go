@@ -1,4 +1,4 @@
-package user_adapter_out_board
+package user_adapter_out_game
 
 import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/game/game_adapter/in/game_adapter_in_player"
