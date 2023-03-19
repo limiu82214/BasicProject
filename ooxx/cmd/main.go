@@ -5,7 +5,7 @@ import (
 
 	"github.com/c-bata/go-prompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/game/game_adapter/in/game_adapter_in_goprompt"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_adapter/in/player_adapter_in_goprompt"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/user/user_adapter/in/player_adapter_in_goprompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/wire"
 )
 
