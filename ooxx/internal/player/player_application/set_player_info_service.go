@@ -1,8 +1,8 @@
 package player_application
 
 import (
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_adapter_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_adapter_port_out"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_domain"
 	"github.com/pkg/errors"
 )
@@ -13,13 +13,13 @@ type setPlayerInfo struct {
 
 func NewSetPlayerInfoService(
 	loadPlayerPort player_adapter_port_out.ILoadPlayerPort,
-) player_adapter_port_in.ISetPlayerInfoUseCase {
+) player_application_port_in.ISetPlayerInfoUseCase {
 	return &setPlayerInfo{
 		loadPlayerPort: loadPlayerPort,
 	}
 }
 
-func (spis *setPlayerInfo) SetPlayerInfo(cmd *player_adapter_port_in.SetPlayerInfoCmd) error {
+func (spis *setPlayerInfo) SetPlayerInfo(cmd *player_application_port_in.SetPlayerInfoCmd) error {
 	if !cmd.IsValid() {
 		panic("檢查是本基")
 	}

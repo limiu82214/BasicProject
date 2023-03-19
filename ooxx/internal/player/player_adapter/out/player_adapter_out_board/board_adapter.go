@@ -13,7 +13,7 @@ type playerBoardAdapter struct {
 	boardPlayerAdapter board_adapter_in_player.IBoardPlayerAdapter
 }
 
-func NewPlayerBoardAdapter(boardPlayerAdapter board_adapter_in_player.IBoardPlayerAdapter) player_adapter_port_out.IBoardPort {
+func New(boardPlayerAdapter board_adapter_in_player.IBoardPlayerAdapter) player_adapter_port_out.IBoardPort {
 	return &playerBoardAdapter{
 		boardPlayerAdapter: boardPlayerAdapter,
 	}

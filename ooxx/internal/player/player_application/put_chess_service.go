@@ -1,8 +1,8 @@
 package player_application
 
 import (
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_adapter_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_adapter_port_out"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_domain"
 	"github.com/pkg/errors"
 )
@@ -18,14 +18,14 @@ type putChess struct {
 func NewPutChess(
 	boardPort player_adapter_port_out.IBoardPort,
 	loadPlayerPort player_adapter_port_out.ILoadPlayerPort,
-) player_adapter_port_in.IPutChessUseCase {
+) player_application_port_in.IPutChessUseCase {
 	return &putChess{
 		boardPort:      boardPort,
 		loadPlayerPort: loadPlayerPort,
 	}
 }
 
-func (pc *putChess) PutChess(cmd *player_adapter_port_in.PutChessCmd) error {
+func (pc *putChess) PutChess(cmd *player_application_port_in.PutChessCmd) error {
 	if !cmd.IsValid() {
 		panic("檢查是本基")
 	}

@@ -1,4 +1,4 @@
-package player_adapter_port_in
+package player_application_port_in
 
 import "github.com/pkg/errors"
 

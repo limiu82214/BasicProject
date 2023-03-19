@@ -30,10 +30,10 @@ func playerX() {
 	)
 
 	// 將 board adapter in player 注入到 player adapter out board
-	pb := player_adapter_out_board.NewPlayerBoardAdapter(nbpa)
-	pldba := player_adapter_out_leveldb.NewPlayerLevelDBAdapter(db)
+	pb := player_adapter_out_board.New(nbpa)
+	pldba := player_adapter_out_leveldb.New(db)
 	// 將 player adapter out board 注入到 usecase
-	gp := player_adapter_in_goprompt.NewPlayerGopromptAdapter(
+	gp := player_adapter_in_goprompt.New(
 		player_application.NewGetBoardState(pb),
 		player_application.NewPutChess(pb, pldba),
 		player_application.NewResetBoard(pb),

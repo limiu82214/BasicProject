@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/c-bata/go-prompt"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_adapter_port_in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_domain"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/nerror"
 )
@@ -21,19 +21,19 @@ type IPlayerGopromptAdapter interface {
 }
 
 type playerGopromptAdapter struct {
-	getBoardStateUseCase player_adapter_port_in.IGetBoardStateUseCase
-	putChessUseCase      player_adapter_port_in.IPutChessUseCase
-	resetBoardUseCase    player_adapter_port_in.IResetBoardUseCase
-	whoWinUseCase        player_adapter_port_in.IWhoWinUseCase
-	setPlayerInfoUseCase player_adapter_port_in.ISetPlayerInfoUseCase
+	getBoardStateUseCase player_application_port_in.IGetBoardStateUseCase
+	putChessUseCase      player_application_port_in.IPutChessUseCase
+	resetBoardUseCase    player_application_port_in.IResetBoardUseCase
+	whoWinUseCase        player_application_port_in.IWhoWinUseCase
+	setPlayerInfoUseCase player_application_port_in.ISetPlayerInfoUseCase
 }
 
-func NewPlayerGopromptAdapter(
-	getBoardStateUseCase player_adapter_port_in.IGetBoardStateUseCase,
-	putChessUseCase player_adapter_port_in.IPutChessUseCase,
-	resetBoardUseCase player_adapter_port_in.IResetBoardUseCase,
-	whoWinUseCase player_adapter_port_in.IWhoWinUseCase,
-	setPlayerInfoUseCase player_adapter_port_in.ISetPlayerInfoUseCase,
+func New(
+	getBoardStateUseCase player_application_port_in.IGetBoardStateUseCase,
+	putChessUseCase player_application_port_in.IPutChessUseCase,
+	resetBoardUseCase player_application_port_in.IResetBoardUseCase,
+	whoWinUseCase player_application_port_in.IWhoWinUseCase,
+	setPlayerInfoUseCase player_application_port_in.ISetPlayerInfoUseCase,
 ) IPlayerGopromptAdapter {
 	return &playerGopromptAdapter{
 		getBoardStateUseCase: getBoardStateUseCase,
@@ -116,7 +116,7 @@ func (bpa *playerGopromptAdapter) PutChess() {
 
 	ss := player_domain.State(s)
 
-	ssc, err := player_adapter_port_in.NewPutChessCmd(nickname, x, y, ss)
+	ssc, err := player_application_port_in.NewPutChessCmd(nickname, x, y, ss)
 	if err != nil {
 		log.Printf("%v\n", nerror.PrettyError(err))
 		return
@@ -147,7 +147,7 @@ func (bpa *playerGopromptAdapter) WhoWin() {
 func (bpa *playerGopromptAdapter) SetPlayerInfo() {
 	nickname := prompt.Input("Nickname len(1~3): ", nullCompleter)
 
-	cmd, err := player_adapter_port_in.NewSetPlayerInfoCmd(nickname)
+	cmd, err := player_application_port_in.NewSetPlayerInfoCmd(nickname)
 	if err != nil {
 		log.Panicln(err.Error())
 		return
