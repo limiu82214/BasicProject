@@ -1,4 +1,4 @@
-package board_domain
+package game_domain
 
 import "github.com/pkg/errors"
 

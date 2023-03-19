@@ -1,34 +1,34 @@
-package board_application
+package game_application
 
 import (
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_in"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_out"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/game/game_application/port/game_application_port_in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/game/game_application/port/game_application_port_out"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/game/game_domain"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
 	"github.com/pkg/errors"
 )
 
 type setStateUseCase struct {
-	loadBoardPort board_application_port_out.ILoadBoardAdapter
+	loadBoardPort game_application_port_out.ILoadBoardAdapter
 }
 
 func NewSetStateUseCase(
-	loadBoardPort board_application_port_out.ILoadBoardAdapter,
-) board_application_port_in.ISetStateUseCase {
+	loadBoardPort game_application_port_out.ILoadBoardAdapter,
+) game_application_port_in.ISetStateUseCase {
 	return &setStateUseCase{
 		loadBoardPort: loadBoardPort,
 	}
 }
 
-func (s *setStateUseCase) SetState(cmd *board_application_port_in.SetStateCmd) error {
+func (s *setStateUseCase) SetState(cmd *game_application_port_in.SetStateCmd) error {
 	if !cmd.IsValid() {
 		panic("檢查是本基")
 	}
 
 	board, err := s.loadBoardPort.GetBoard()
 	if err != nil {
-		if errors.Is(err, board_domain.ErrGetEmpty) {
-			board = board_domain.NewBoard()
+		if errors.Is(err, game_domain.ErrGetEmpty) {
+			board = game_domain.NewBoard()
 		} else {
 			return errors.Wrap(err, "in service setState")
 		}

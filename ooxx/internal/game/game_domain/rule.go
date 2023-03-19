@@ -1,4 +1,4 @@
-package board_domain
+package game_domain
 
 import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"

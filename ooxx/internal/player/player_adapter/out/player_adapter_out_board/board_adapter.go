@@ -1,7 +1,7 @@
 package player_adapter_out_board
 
 import (
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_adapter/in/board_adapter_in_player"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/game/game_adapter/in/game_adapter_in_player"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_adapter_port_out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
 	"github.com/pkg/errors"
@@ -10,10 +10,10 @@ import (
 var errInHere = errors.New("in player_adapter_out_board")
 
 type playerBoardAdapter struct {
-	boardPlayerAdapter board_adapter_in_player.IBoardPlayerAdapter
+	boardPlayerAdapter game_adapter_in_player.IBoardPlayerAdapter
 }
 
-func New(boardPlayerAdapter board_adapter_in_player.IBoardPlayerAdapter) player_adapter_port_out.IBoardAdapter {
+func New(boardPlayerAdapter game_adapter_in_player.IBoardPlayerAdapter) player_adapter_port_out.IBoardAdapter {
 	return &playerBoardAdapter{
 		boardPlayerAdapter: boardPlayerAdapter,
 	}

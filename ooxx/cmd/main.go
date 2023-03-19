@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/c-bata/go-prompt"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_adapter/in/board_adapter_in_goprompt"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/game/game_adapter/in/game_adapter_in_goprompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_adapter/in/player_adapter_in_goprompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/wire"
 )
@@ -40,7 +40,7 @@ func boardX() { //nolint:unused // for test
 	gp := wire.InitBoardAdapterInGoPrompt()
 leave:
 	for {
-		t := prompt.Input("action: ", board_adapter_in_goprompt.Completer)
+		t := prompt.Input("action: ", game_adapter_in_goprompt.Completer)
 		switch t {
 		case "set":
 			gp.SetState()

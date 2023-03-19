@@ -1,9 +1,9 @@
-package board_adapter_in_player
+package game_adapter_in_player
 
 import (
 	"log"
 
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/game/game_application/port/game_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/nerror"
 	"github.com/pkg/errors"
@@ -19,17 +19,17 @@ type IBoardPlayerAdapter interface {
 }
 
 type boardPlayerAdapter struct {
-	getBoardUseCase        board_application_port_in.IGetBoardStateUseCase
-	setStateUseCase        board_application_port_in.ISetStateUseCase
-	resetBoardStateUseCase board_application_port_in.IResetBoardStateUseCase
-	whoWinUseCase          board_application_port_in.IWhoWinUseCase
+	getBoardUseCase        game_application_port_in.IGetBoardStateUseCase
+	setStateUseCase        game_application_port_in.ISetStateUseCase
+	resetBoardStateUseCase game_application_port_in.IResetBoardStateUseCase
+	whoWinUseCase          game_application_port_in.IWhoWinUseCase
 }
 
 func New(
-	getBoardUseCase board_application_port_in.IGetBoardStateUseCase,
-	setStateUseCase board_application_port_in.ISetStateUseCase,
-	resetBoardStateUseCase board_application_port_in.IResetBoardStateUseCase,
-	whoWinUseCase board_application_port_in.IWhoWinUseCase,
+	getBoardUseCase game_application_port_in.IGetBoardStateUseCase,
+	setStateUseCase game_application_port_in.ISetStateUseCase,
+	resetBoardStateUseCase game_application_port_in.IResetBoardStateUseCase,
+	whoWinUseCase game_application_port_in.IWhoWinUseCase,
 ) IBoardPlayerAdapter {
 	return &boardPlayerAdapter{
 		getBoardUseCase:        getBoardUseCase,
@@ -47,7 +47,7 @@ func (bpa *boardPlayerAdapter) GetBoardState() ([3][3]shared.State, error) {
 func (bpa *boardPlayerAdapter) SetState(x, y, s int) error {
 	ss := shared.State(s)
 
-	ssc, err := board_application_port_in.NewSetStateCmd(x, y, ss)
+	ssc, err := game_application_port_in.NewSetStateCmd(x, y, ss)
 	if err != nil {
 		log.Printf("%v\n", nerror.PrettyError(err))
 	}

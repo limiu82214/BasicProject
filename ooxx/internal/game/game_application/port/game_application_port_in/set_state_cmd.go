@@ -1,4 +1,4 @@
-package board_application_port_in
+package game_application_port_in
 
 import (
 	"github.com/pkg/errors"
