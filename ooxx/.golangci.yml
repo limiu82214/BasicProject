@@ -48,6 +48,7 @@ issues:
     - linters:
         - revive
       text: "don't use ALL_CAPS in Go names; use CamelCase"
+      text: "don't use an underscore in package name"
 
 
 linters:
