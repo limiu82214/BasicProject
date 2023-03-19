@@ -11,7 +11,9 @@ type setStateUseCase struct {
 	loadBoardPort board_application_port_out.ILoadBoardAdapter
 }
 
-func NewSetStateUseCase(loadBoardPort board_application_port_out.ILoadBoardAdapter) board_application_port_in.ISetStateUseCase {
+func NewSetStateUseCase(
+	loadBoardPort board_application_port_out.ILoadBoardAdapter,
+) board_application_port_in.ISetStateUseCase {
 	return &setStateUseCase{
 		loadBoardPort: loadBoardPort,
 	}

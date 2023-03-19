@@ -43,11 +43,13 @@ linters-settings:
 issues:
   exclude-rules:
     - linters:
-        - funlen
+      - funlen
       source: "^func Test"
     - linters:
-        - revive
+      - revive
       text: "don't use ALL_CAPS in Go names; use CamelCase"
+    - linters:
+      - revive
       text: "don't use an underscore in package name"
 
 

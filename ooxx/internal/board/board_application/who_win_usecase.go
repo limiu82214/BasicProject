@@ -11,7 +11,9 @@ type whoWinUseCase struct {
 	loadBoardPort board_application_port_out.ILoadBoardAdapter
 }
 
-func NewWhoWinUseCase(loadBoardPort board_application_port_out.ILoadBoardAdapter) board_application_port_in.IWhoWinUseCase {
+func NewWhoWinUseCase(
+	loadBoardPort board_application_port_out.ILoadBoardAdapter,
+) board_application_port_in.IWhoWinUseCase {
 	return &whoWinUseCase{
 		loadBoardPort: loadBoardPort,
 	}
