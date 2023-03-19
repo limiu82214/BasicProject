@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/c-bata/go-prompt"
+	board_in_goprompt "github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/in/board_adapter_in_goprompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/in/board_adapter_in_player"
-	board_in_goprompt "github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/in/goprompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/out/board_adapter_out_leveldb"
 	board_application "github.com/limiu82214/GoBasicProject/ooxx/internal/board/application"
 	player_in_goprompt "github.com/limiu82214/GoBasicProject/ooxx/internal/player/adapter/in/goprompt"
@@ -65,7 +65,7 @@ leave:
 func boardX() { //nolint:unused // for test
 	db := leveldb.GetInst()
 	ldba := board_adapter_out_leveldb.New(db)
-	gp := board_in_goprompt.NewBoardGopromptAdapter(
+	gp := board_in_goprompt.New(
 		board_application.NewSetState(ldba),
 		board_application.NewWhoWin(ldba),
 		board_application.NewGetBoardState(ldba),

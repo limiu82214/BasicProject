@@ -1,4 +1,4 @@
-package goprompt
+package board_adapter_in_goprompt
 
 import (
 	"encoding/json"
@@ -26,7 +26,7 @@ type boardGopromptAdapter struct {
 	resetBoardStateUseCase in.IResetBoardStateUseCase
 }
 
-func NewBoardGopromptAdapter(
+func New(
 	setStateUserCase in.ISetStateUseCase,
 	whoWinUseCase in.IWhoWinUseCase,
 	getBoardStateUseCase in.IGetBoardStateUseCase,
