@@ -32,7 +32,6 @@ func InitPlayerAdapterInGoPrompt() player_adapter_in_goprompt.IPlayerGopromptAda
 		player_application.NewResetBoardUseCase,
 		player_application.NewWhoWinUseCase,
 		player_application.NewSetPlayerInfoUseCase,
-
 		player_adapter_in_goprompt.New,
 	))
 }
