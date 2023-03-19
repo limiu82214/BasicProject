@@ -49,9 +49,19 @@ github.com/limiu82214/GoBasicProject/ooxx
     開發分支必需通過golangci-lint才能merge進ooxx。
 * [] 整理，抽離共用，整理成固定的規則
     Err
+        統一使用 github.com/pkg/errors
+        一致使用errors.Wrap與errors.New (重覆Wrap會成加記憶體等成本，但是書寫時可以避免需要判斷上下文有沒有Wrap過的問題)
+        使用nerror.PrettyError來印出error鏈與trace path
+    命名規劃
+        為了使引用變的容易，取捨後決定讓資料夾名稱有重覆
+            所有會被引用的package依照六角結構命名
+            application New+完整名稱
+            其他只用New
+    Wire
+        使用Wire注入
+            將DB，UseCase做成Set
     State
     Board與Player結構比對
-    命名規劃
 * [] 由player輪流玩
 * [] 加入三戰兩勝的機制
 * [] 可以同時的多個board
