@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/c-bata/go-prompt"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/board_application_port_in"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_domain"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/nerror"
 )
 
@@ -107,7 +107,7 @@ func (bpa *boardGopromptAdapter) SetState() {
 		return
 	}
 
-	ss := domain.State(s)
+	ss := board_domain.State(s)
 
 	ssc, err := board_application_port_in.NewSetStateCmd(x, y, ss)
 	if err != nil {
@@ -131,7 +131,7 @@ func (bpa *boardGopromptAdapter) WhoWin() {
 		return
 	}
 
-	if winner == domain.Blank {
+	if winner == board_domain.Blank {
 		log.Print("sys: nobody win")
 	} else {
 		log.Printf("sys: winner is %d", winner)

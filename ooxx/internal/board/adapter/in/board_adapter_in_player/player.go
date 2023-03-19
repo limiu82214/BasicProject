@@ -3,8 +3,8 @@ package board_adapter_in_player
 import (
 	"log"
 
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/board_application_port_in"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_domain"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/nerror"
 	"github.com/pkg/errors"
 )
@@ -12,10 +12,10 @@ import (
 var errInHere = errors.New("in board_adapter_in_player")
 
 type IBoardPlayerAdapter interface {
-	GetBoardState() ([3][3]domain.State, error)
+	GetBoardState() ([3][3]board_domain.State, error)
 	SetState(x, y, s int) error
 	ResetBoard() error
-	WhoWin() (domain.State, error)
+	WhoWin() (board_domain.State, error)
 }
 
 type boardPlayerAdapter struct {
@@ -39,13 +39,13 @@ func New(
 	}
 }
 
-func (bpa *boardPlayerAdapter) GetBoardState() ([3][3]domain.State, error) {
+func (bpa *boardPlayerAdapter) GetBoardState() ([3][3]board_domain.State, error) {
 	bs, err := bpa.getBoardUseCase.GetBoardState()
 	return bs, errors.Wrap(err, errInHere.Error())
 }
 
 func (bpa *boardPlayerAdapter) SetState(x, y, s int) error {
-	ss := domain.State(s)
+	ss := board_domain.State(s)
 
 	ssc, err := board_application_port_in.NewSetStateCmd(x, y, ss)
 	if err != nil {
@@ -62,7 +62,7 @@ func (bpa *boardPlayerAdapter) ResetBoard() error {
 	return errors.Wrap(err, errInHere.Error())
 }
 
-func (bpa *boardPlayerAdapter) WhoWin() (domain.State, error) {
+func (bpa *boardPlayerAdapter) WhoWin() (board_domain.State, error) {
 	ds, err := bpa.whoWinUseCase.WhoWin()
 	return ds, errors.Wrap(err, errInHere.Error())
 }

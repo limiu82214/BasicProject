@@ -1,8 +1,8 @@
 package board_adapter_out_leveldb
 
 import (
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/application/port/board_application_port_out"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_out"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_domain"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/gob"
 	"github.com/pkg/errors"
 	"github.com/syndtr/goleveldb/leveldb"
@@ -22,7 +22,7 @@ func New(db *leveldb.DB) board_application_port_out.ILoadBoardPort {
 		db: db,
 	}
 }
-func (bldba *boardLevelDBAdapter) SetBoard(b domain.IBoard) error {
+func (bldba *boardLevelDBAdapter) SetBoard(b board_domain.IBoard) error {
 	id := []byte("board_once")
 
 	bs, err := b.GetBoardStatus()
@@ -43,31 +43,31 @@ func (bldba *boardLevelDBAdapter) SetBoard(b domain.IBoard) error {
 	return nil
 }
 
-func (bldba *boardLevelDBAdapter) GetBoard() (domain.IBoard, error) {
+func (bldba *boardLevelDBAdapter) GetBoard() (board_domain.IBoard, error) {
 	id := []byte("board_once")
 
 	return nil, errors.New("message string")
 	data, err := bldba.db.Get(id, nil)
 	if err != nil {
 		if errors.Is(err, leveldb.ErrNotFound) {
-			return nil, domain.ErrGetEmpty
+			return nil, board_domain.ErrGetEmpty
 		}
 
 		return nil, errors.Wrap(err, errGetBoardFail.Error())
 	}
 
 	if data == nil {
-		return nil, domain.ErrGetEmpty
+		return nil, board_domain.ErrGetEmpty
 	}
 
-	var s domain.BoardStatus
+	var s board_domain.BoardStatus
 
 	err = gob.GetStrutFromByte(data, &s)
 	if err != nil {
 		return nil, errors.Wrap(err, errParseBoardFromStoreFail.Error())
 	}
 
-	b := domain.NewBoard()
+	b := board_domain.NewBoard()
 
 	err = b.SetBoardStatus(&s)
 	if err != nil {

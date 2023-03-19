@@ -1,0 +1,7 @@
+package in
+
+import "github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_domain"
+
+type IWhoWinUseCase interface {
+	WhoWin() (player_domain.State, error)
+}

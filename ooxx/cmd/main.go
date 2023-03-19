@@ -4,14 +4,14 @@ import (
 	"log"
 
 	"github.com/c-bata/go-prompt"
-	board_in_goprompt "github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/in/board_adapter_in_goprompt"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/in/board_adapter_in_goprompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/in/board_adapter_in_player"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/out/board_adapter_out_leveldb"
-	board_application "github.com/limiu82214/GoBasicProject/ooxx/internal/board/application"
-	player_in_goprompt "github.com/limiu82214/GoBasicProject/ooxx/internal/player/adapter/in/goprompt"
-	player_board "github.com/limiu82214/GoBasicProject/ooxx/internal/player/adapter/out/board"
-	player_in_leveldb_adapter "github.com/limiu82214/GoBasicProject/ooxx/internal/player/adapter/out/leveldb"
-	player_application "github.com/limiu82214/GoBasicProject/ooxx/internal/player/application"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/adapter/in/player_adapter_in_goprompt"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/adapter/out/player_adapter_out_board"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/adapter/out/player_adapter_out_leveldb"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/leveldb"
 )
 
@@ -30,10 +30,10 @@ func playerX() {
 	)
 
 	// 將 board adapter in player 注入到 player adapter out board
-	pb := player_board.NewPlayerBoardAdapter(nbpa)
-	pldba := player_in_leveldb_adapter.NewPlayerLevelDBAdapter(db)
+	pb := player_adapter_out_board.NewPlayerBoardAdapter(nbpa)
+	pldba := player_adapter_out_leveldb.NewPlayerLevelDBAdapter(db)
 	// 將 player adapter out board 注入到 usecase
-	gp := player_in_goprompt.NewPlayerGopromptAdapter(
+	gp := player_adapter_in_goprompt.NewPlayerGopromptAdapter(
 		player_application.NewGetBoardState(pb),
 		player_application.NewPutChess(pb, pldba),
 		player_application.NewResetBoard(pb),
@@ -42,7 +42,7 @@ func playerX() {
 	)
 leave:
 	for {
-		t := prompt.Input("action: ", player_in_goprompt.Completer)
+		t := prompt.Input("action: ", player_adapter_in_goprompt.Completer)
 		switch t {
 		case "put":
 			gp.PutChess()
@@ -65,7 +65,7 @@ leave:
 func boardX() { //nolint:unused // for test
 	db := leveldb.GetInst()
 	ldba := board_adapter_out_leveldb.New(db)
-	gp := board_in_goprompt.New(
+	gp := board_adapter_in_goprompt.New(
 		board_application.NewSetState(ldba),
 		board_application.NewWhoWin(ldba),
 		board_application.NewGetBoardState(ldba),
@@ -73,7 +73,7 @@ func boardX() { //nolint:unused // for test
 	)
 leave:
 	for {
-		t := prompt.Input("action: ", board_in_goprompt.Completer)
+		t := prompt.Input("action: ", board_adapter_in_goprompt.Completer)
 		switch t {
 		case "set":
 			gp.SetState()
