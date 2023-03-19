@@ -11,7 +11,7 @@ type resetBoardState struct {
 	loadBoardPort board_application_port_out.ILoadBoardPort
 }
 
-func NewResetBoardState(loadBoardPort board_application_port_out.ILoadBoardPort) board_application_port_in.IResetBoardStateUseCase {
+func NewResetBoardStateUseCase(loadBoardPort board_application_port_out.ILoadBoardPort) board_application_port_in.IResetBoardStateUseCase {
 	return &resetBoardState{
 		loadBoardPort: loadBoardPort,
 	}

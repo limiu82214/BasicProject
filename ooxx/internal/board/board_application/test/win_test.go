@@ -17,8 +17,8 @@ import (
 func Test_setState_SetState(t *testing.T) {
 	db := leveldb.GetInst()
 	ldba := board_adapter_out_leveldb.New(db)
-	nss := board_application.NewSetState(ldba)
-	ngbs := board_application.NewGetBoardState(ldba)
+	nss := board_application.NewSetStateUseCase(ldba)
+	ngbs := board_application.NewGetBoardStateUseCase(ldba)
 	showBoard := func(bs [3][3]board_domain.State) {
 		b, err := json.Marshal(bs)
 		if err != nil {

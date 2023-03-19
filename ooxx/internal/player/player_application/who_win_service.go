@@ -11,7 +11,7 @@ type whoWin struct {
 	boardPort player_adapter_port_out.IBoardPort
 }
 
-func NewWhoWin(boardPort player_adapter_port_out.IBoardPort) player_application_port_in.IWhoWinUseCase {
+func NewWhoWinUseCase(boardPort player_adapter_port_out.IBoardPort) player_application_port_in.IWhoWinUseCase {
 	return &whoWin{
 		boardPort: boardPort,
 	}

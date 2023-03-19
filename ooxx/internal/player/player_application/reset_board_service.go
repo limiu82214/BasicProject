@@ -10,7 +10,7 @@ type resetBoard struct {
 	boardPort player_adapter_port_out.IBoardPort
 }
 
-func NewResetBoard(boardPort player_adapter_port_out.IBoardPort) player_application_port_in.IResetBoardUseCase {
+func NewResetBoardUseCase(boardPort player_adapter_port_out.IBoardPort) player_application_port_in.IResetBoardUseCase {
 	return &resetBoard{
 		boardPort: boardPort,
 	}

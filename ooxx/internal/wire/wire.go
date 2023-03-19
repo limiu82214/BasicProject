@@ -1,5 +1,4 @@
-//go:build wireinject
-// +build wireinject
+// // +build wireinject
 
 package wire
 
@@ -20,18 +19,18 @@ func InitPlayerAdapterInGoPrompt() player_adapter_in_goprompt.IPlayerGopromptAda
 	panic(wire.Build(
 		leveldb.GetInst,
 		board_adapter_out_leveldb.New,
-		board_application.NewGetBoardState,
-		board_application.NewSetState,
-		board_application.NewResetBoardState,
-		board_application.NewWhoWin,
+		board_application.NewGetBoardStateUseCase,
+		board_application.NewSetStateUseCase,
+		board_application.NewResetBoardStateUseCase,
+		board_application.NewWhoWinUseCase,
 		board_adapter_in_player.New,
 		player_adapter_out_board.New,
-		player_application.NewGetBoardState,
+		player_application.NewGetBoardStateUseCase,
 		player_adapter_out_leveldb.New,
-		player_application.NewPutChess,
-		player_application.NewResetBoard,
-		player_application.NewWhoWin,
-		player_application.NewSetPlayerInfoService,
+		player_application.NewPutChessUseCase,
+		player_application.NewResetBoardUseCase,
+		player_application.NewWhoWinUseCase,
+		player_application.NewSetPlayerInfoUseCase,
 
 		player_adapter_in_goprompt.New,
 	))
@@ -41,10 +40,10 @@ func InitBoardAdapterInGoPrompt() board_adapter_in_goprompt.IBoardGopromptAdapte
 	panic(wire.Build(
 		leveldb.GetInst,
 		board_adapter_out_leveldb.New,
-		board_application.NewGetBoardState,
-		board_application.NewSetState,
-		board_application.NewResetBoardState,
-		board_application.NewWhoWin,
+		board_application.NewGetBoardStateUseCase,
+		board_application.NewSetStateUseCase,
+		board_application.NewResetBoardStateUseCase,
+		board_application.NewWhoWinUseCase,
 		board_adapter_in_goprompt.New,
 	))
 }

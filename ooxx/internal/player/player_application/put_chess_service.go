@@ -15,7 +15,7 @@ type putChess struct {
 	loadPlayerPort player_adapter_port_out.ILoadPlayerPort
 }
 
-func NewPutChess(
+func NewPutChessUseCase(
 	boardPort player_adapter_port_out.IBoardPort,
 	loadPlayerPort player_adapter_port_out.ILoadPlayerPort,
 ) player_application_port_in.IPutChessUseCase {

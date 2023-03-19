@@ -11,7 +11,7 @@ type whoWin struct {
 	loadBoardPort board_application_port_out.ILoadBoardPort
 }
 
-func NewWhoWin(loadBoardPort board_application_port_out.ILoadBoardPort) board_application_port_in.IWhoWinUseCase {
+func NewWhoWinUseCase(loadBoardPort board_application_port_out.ILoadBoardPort) board_application_port_in.IWhoWinUseCase {
 	return &whoWin{
 		loadBoardPort: loadBoardPort,
 	}

@@ -11,7 +11,7 @@ type getBoardState struct {
 	boardPort player_adapter_port_out.IBoardPort
 }
 
-func NewGetBoardState(boardPort player_adapter_port_out.IBoardPort) player_application_port_in.IGetBoardStateUseCase {
+func NewGetBoardStateUseCase(boardPort player_adapter_port_out.IBoardPort) player_application_port_in.IGetBoardStateUseCase {
 	return &getBoardState{
 		boardPort: boardPort,
 	}

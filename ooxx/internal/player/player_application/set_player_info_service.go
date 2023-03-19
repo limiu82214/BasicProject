@@ -11,7 +11,7 @@ type setPlayerInfo struct {
 	loadPlayerPort player_adapter_port_out.ILoadPlayerPort
 }
 
-func NewSetPlayerInfoService(
+func NewSetPlayerInfoUseCase(
 	loadPlayerPort player_adapter_port_out.ILoadPlayerPort,
 ) player_application_port_in.ISetPlayerInfoUseCase {
 	return &setPlayerInfo{
