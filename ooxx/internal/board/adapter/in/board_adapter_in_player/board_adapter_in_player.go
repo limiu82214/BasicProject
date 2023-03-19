@@ -1,4 +1,4 @@
-package player
+package board_adapter_in_player
 
 import (
 	"log"
@@ -25,7 +25,7 @@ type boardPlayerAdapter struct {
 	whoWinUseCase          in.IWhoWinUseCase
 }
 
-func NewBoardPlayerAdapter(
+func New(
 	getBoardUseCase in.IGetBoardStateUseCase,
 	setStateUseCase in.ISetStateUseCase,
 	resetBoardStateUseCase in.IResetBoardStateUseCase,

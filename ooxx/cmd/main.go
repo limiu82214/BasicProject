@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/c-bata/go-prompt"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/in/board_adapter_in_player"
 	board_in_goprompt "github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/in/goprompt"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/in/player"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/out/board_adapter_out_leveldb"
 	board_application "github.com/limiu82214/GoBasicProject/ooxx/internal/board/application"
 	player_in_goprompt "github.com/limiu82214/GoBasicProject/ooxx/internal/player/adapter/in/goprompt"
@@ -22,7 +22,7 @@ func playerX() {
 	// 做一個 board adapter in player
 	db := leveldb.GetInst()
 	bldba := board_adapter_out_leveldb.New(db)
-	nbpa := player.NewBoardPlayerAdapter(
+	nbpa := board_adapter_in_player.New(
 		board_application.NewGetBoardState(bldba),
 		board_application.NewSetState(bldba),
 		board_application.NewResetBoardState(bldba),
