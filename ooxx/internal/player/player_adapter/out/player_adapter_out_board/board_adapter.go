@@ -1,7 +1,7 @@
 package player_adapter_out_board
 
 import (
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/in/board_adapter_in_player"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_adapter/in/board_adapter_in_player"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_domain"
 	"github.com/pkg/errors"

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/adapter/out/board_adapter_out_leveldb"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_adapter/out/board_adapter_out_leveldb"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_domain"
