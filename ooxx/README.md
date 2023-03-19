@@ -62,7 +62,10 @@ github.com/limiu82214/GoBasicProject/ooxx
             將DB，UseCase做成Set
     State
         將State分離出來(因為目前player與board都有用到state)
-    Board與Player結構比對
+* [] 重新拆分顆粒度
+    API 負責處理所有對外的API處理
+    User 負責處理所有的玩家資訊
+    Game 負責處理所有的遊戲資訊
 * [] 由player輪流玩
 * [] 加入三戰兩勝的機制
 * [] 可以同時的多個board
