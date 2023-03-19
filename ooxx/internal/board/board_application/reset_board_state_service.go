@@ -7,18 +7,18 @@ import (
 	"github.com/pkg/errors"
 )
 
-type resetBoardState struct {
+type resetBoardStateUseCase struct {
 	loadBoardPort board_application_port_out.ILoadBoardAdapter
 }
 
 func NewResetBoardStateUseCase(loadBoardPort board_application_port_out.ILoadBoardAdapter) board_application_port_in.IResetBoardStateUseCase {
-	return &resetBoardState{
+	return &resetBoardStateUseCase{
 		loadBoardPort: loadBoardPort,
 	}
 }
 
-func (rbs *resetBoardState) ResetBoardState() error {
-	board, err := rbs.loadBoardPort.GetBoard()
+func (r *resetBoardStateUseCase) ResetBoardState() error {
+	board, err := r.loadBoardPort.GetBoard()
 	if err != nil {
 		if errors.Is(err, board_domain.ErrGetEmpty) {
 			board = board_domain.NewBoard()
@@ -29,7 +29,7 @@ func (rbs *resetBoardState) ResetBoardState() error {
 
 	board.ResetBoardState()
 
-	err = rbs.loadBoardPort.SetBoard(board)
+	err = r.loadBoardPort.SetBoard(board)
 	if err != nil {
 		return errors.Wrap(err, "in service resetBoardState")
 	}

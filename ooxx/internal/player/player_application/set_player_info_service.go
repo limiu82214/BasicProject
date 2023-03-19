@@ -7,24 +7,24 @@ import (
 	"github.com/pkg/errors"
 )
 
-type setPlayerInfo struct {
+type setPlayerInfoUseCase struct {
 	loadPlayerPort player_adapter_port_out.ILoadPlayerAdapter
 }
 
 func NewSetPlayerInfoUseCase(
 	loadPlayerPort player_adapter_port_out.ILoadPlayerAdapter,
 ) player_application_port_in.ISetPlayerInfoUseCase {
-	return &setPlayerInfo{
+	return &setPlayerInfoUseCase{
 		loadPlayerPort: loadPlayerPort,
 	}
 }
 
-func (spis *setPlayerInfo) SetPlayerInfo(cmd *player_application_port_in.SetPlayerInfoCmd) error {
+func (s *setPlayerInfoUseCase) SetPlayerInfo(cmd *player_application_port_in.SetPlayerInfoCmd) error {
 	if !cmd.IsValid() {
 		panic("檢查是本基")
 	}
 
-	p, err := spis.loadPlayerPort.GetPlayer(cmd.Nickname)
+	p, err := s.loadPlayerPort.GetPlayer(cmd.Nickname)
 	if err != nil && errors.Is(err, player_domain.ErrGetEmpty) {
 		p = player_domain.NewPlayer()
 	} else if err != nil {
@@ -36,7 +36,7 @@ func (spis *setPlayerInfo) SetPlayerInfo(cmd *player_application_port_in.SetPlay
 		return errors.Wrap(err, errInHere.Error())
 	}
 
-	err = spis.loadPlayerPort.SetPlayer(p)
+	err = s.loadPlayerPort.SetPlayer(p)
 	if err != nil {
 		return errors.Wrap(err, errInHere.Error())
 	}

@@ -7,18 +7,18 @@ import (
 	"github.com/pkg/errors"
 )
 
-type whoWin struct {
+type whoWinUseCase struct {
 	loadBoardPort board_application_port_out.ILoadBoardAdapter
 }
 
 func NewWhoWinUseCase(loadBoardPort board_application_port_out.ILoadBoardAdapter) board_application_port_in.IWhoWinUseCase {
-	return &whoWin{
+	return &whoWinUseCase{
 		loadBoardPort: loadBoardPort,
 	}
 }
 
-func (ww *whoWin) WhoWin() (board_domain.State, error) {
-	board, err := ww.loadBoardPort.GetBoard()
+func (w *whoWinUseCase) WhoWin() (board_domain.State, error) {
+	board, err := w.loadBoardPort.GetBoard()
 	if err != nil {
 		if errors.Is(err, board_domain.ErrGetEmpty) {
 			board = board_domain.NewBoard()

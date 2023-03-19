@@ -7,17 +7,17 @@ import (
 	"github.com/pkg/errors"
 )
 
-type getBoardState struct {
+type getBoardStateUseCase struct {
 	boardPort player_adapter_port_out.IBoardAdapter
 }
 
 func NewGetBoardStateUseCase(boardPort player_adapter_port_out.IBoardAdapter) player_application_port_in.IGetBoardStateUseCase {
-	return &getBoardState{
+	return &getBoardStateUseCase{
 		boardPort: boardPort,
 	}
 }
 
-func (gbs *getBoardState) GetBoardState() ([3][3]player_domain.State, error) {
-	tmpB, err := gbs.boardPort.GetBoardState()
+func (g *getBoardStateUseCase) GetBoardState() ([3][3]player_domain.State, error) {
+	tmpB, err := g.boardPort.GetBoardState()
 	return tmpB, errors.Wrap(err, "in GetBoardState")
 }

@@ -7,22 +7,22 @@ import (
 	"github.com/pkg/errors"
 )
 
-type setState struct {
+type setStateUseCase struct {
 	loadBoardPort board_application_port_out.ILoadBoardAdapter
 }
 
 func NewSetStateUseCase(loadBoardPort board_application_port_out.ILoadBoardAdapter) board_application_port_in.ISetStateUseCase {
-	return &setState{
+	return &setStateUseCase{
 		loadBoardPort: loadBoardPort,
 	}
 }
 
-func (ss *setState) SetState(cmd *board_application_port_in.SetStateCmd) error {
+func (s *setStateUseCase) SetState(cmd *board_application_port_in.SetStateCmd) error {
 	if !cmd.IsValid() {
 		panic("檢查是本基")
 	}
 
-	board, err := ss.loadBoardPort.GetBoard()
+	board, err := s.loadBoardPort.GetBoard()
 	if err != nil {
 		if errors.Is(err, board_domain.ErrGetEmpty) {
 			board = board_domain.NewBoard()
@@ -36,7 +36,7 @@ func (ss *setState) SetState(cmd *board_application_port_in.SetStateCmd) error {
 		return errors.Wrap(err, "in service setState")
 	}
 
-	err = ss.loadBoardPort.SetBoard(board)
+	err = s.loadBoardPort.SetBoard(board)
 	if err != nil {
 		return errors.Wrap(err, "in service setState")
 	}

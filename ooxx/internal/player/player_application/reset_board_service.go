@@ -6,17 +6,17 @@ import (
 	"github.com/pkg/errors"
 )
 
-type resetBoard struct {
+type resetBoardUseCase struct {
 	boardPort player_adapter_port_out.IBoardAdapter
 }
 
 func NewResetBoardUseCase(boardPort player_adapter_port_out.IBoardAdapter) player_application_port_in.IResetBoardUseCase {
-	return &resetBoard{
+	return &resetBoardUseCase{
 		boardPort: boardPort,
 	}
 }
 
-func (rb *resetBoard) ResetBoard() error {
-	err := rb.boardPort.ResetBoard()
+func (r *resetBoardUseCase) ResetBoard() error {
+	err := r.boardPort.ResetBoard()
 	return errors.Wrap(err, errInHere.Error())
 }
