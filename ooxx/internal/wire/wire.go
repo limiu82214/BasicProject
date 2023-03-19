@@ -16,34 +16,44 @@ import (
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/leveldb"
 )
 
+var DBSet = wire.NewSet(
+	leveldb.GetInst,
+)
+
+var BoardApplicationSet = wire.NewSet(
+	board_application.NewGetBoardStateUseCase,
+	board_application.NewSetStateUseCase,
+	board_application.NewResetBoardStateUseCase,
+	board_application.NewWhoWinUseCase,
+)
+
+var PlayerApplicationSet = wire.NewSet(
+	player_application.NewGetBoardStateUseCase,
+	player_application.NewPutChessUseCase,
+	player_application.NewResetBoardUseCase,
+	player_application.NewWhoWinUseCase,
+	player_application.NewSetPlayerInfoUseCase,
+)
+
 func InitPlayerAdapterInGoPrompt() player_adapter_in_goprompt.IPlayerGopromptAdapter {
 	panic(wire.Build(
-		leveldb.GetInst,
+		DBSet,
 		board_adapter_out_leveldb.New,
-		board_application.NewGetBoardStateUseCase,
-		board_application.NewSetStateUseCase,
-		board_application.NewResetBoardStateUseCase,
-		board_application.NewWhoWinUseCase,
+		BoardApplicationSet,
 		board_adapter_in_player.New,
+
 		player_adapter_out_board.New,
-		player_application.NewGetBoardStateUseCase,
 		player_adapter_out_leveldb.New,
-		player_application.NewPutChessUseCase,
-		player_application.NewResetBoardUseCase,
-		player_application.NewWhoWinUseCase,
-		player_application.NewSetPlayerInfoUseCase,
+		PlayerApplicationSet,
 		player_adapter_in_goprompt.New,
 	))
 }
 
 func InitBoardAdapterInGoPrompt() board_adapter_in_goprompt.IBoardGopromptAdapter {
 	panic(wire.Build(
-		leveldb.GetInst,
+		DBSet,
 		board_adapter_out_leveldb.New,
-		board_application.NewSetStateUseCase,
-		board_application.NewWhoWinUseCase,
-		board_application.NewGetBoardStateUseCase,
-		board_application.NewResetBoardStateUseCase,
+		BoardApplicationSet,
 		board_adapter_in_goprompt.New,
 	))
 }

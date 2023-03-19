@@ -59,6 +59,7 @@ github.com/limiu82214/GoBasicProject/ooxx
             其他只用New
     Wire
         使用Wire注入
+            將DB，UseCase做成Set
     State
     Board與Player結構比對
 * [] 由player輪流玩
