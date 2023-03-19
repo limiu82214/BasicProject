@@ -1,7 +1,7 @@
 package player_adapter_out_leveldb
 
 import (
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/out"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_adapter_port_out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_domain"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/gob"
 	"github.com/pkg/errors"
@@ -18,7 +18,7 @@ type playerLevelDBAdapter struct {
 	db *leveldb.DB
 }
 
-func NewPlayerLevelDBAdapter(db *leveldb.DB) out.ILoadPlayerPort {
+func NewPlayerLevelDBAdapter(db *leveldb.DB) player_adapter_port_out.ILoadPlayerPort {
 	return &playerLevelDBAdapter{
 		db: db,
 	}

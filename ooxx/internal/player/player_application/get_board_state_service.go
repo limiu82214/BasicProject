@@ -1,17 +1,17 @@
 package player_application
 
 import (
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/in"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/out"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_adapter_port_in"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_adapter_port_out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_domain"
 	"github.com/pkg/errors"
 )
 
 type getBoardState struct {
-	boardPort out.IBoardPort
+	boardPort player_adapter_port_out.IBoardPort
 }
 
-func NewGetBoardState(boardPort out.IBoardPort) in.IGetBoardStateUseCase {
+func NewGetBoardState(boardPort player_adapter_port_out.IBoardPort) player_adapter_port_in.IGetBoardStateUseCase {
 	return &getBoardState{
 		boardPort: boardPort,
 	}

@@ -2,7 +2,7 @@ package player_adapter_out_board
 
 import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_adapter/in/board_adapter_in_player"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/out"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_adapter_port_out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_domain"
 	"github.com/pkg/errors"
 )
@@ -13,7 +13,7 @@ type playerBoardAdapter struct {
 	boardPlayerAdapter board_adapter_in_player.IBoardPlayerAdapter
 }
 
-func NewPlayerBoardAdapter(boardPlayerAdapter board_adapter_in_player.IBoardPlayerAdapter) out.IBoardPort {
+func NewPlayerBoardAdapter(boardPlayerAdapter board_adapter_in_player.IBoardPlayerAdapter) player_adapter_port_out.IBoardPort {
 	return &playerBoardAdapter{
 		boardPlayerAdapter: boardPlayerAdapter,
 	}
