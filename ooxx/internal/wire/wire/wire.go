@@ -1,6 +1,8 @@
 //go:build wireinject
 // +build wireinject
 
+// wire ./internal/wire/wire/wire.go; mv ./internal/wire/wire/wire_gen.go ./internal/wire
+
 package wire
 
 import (

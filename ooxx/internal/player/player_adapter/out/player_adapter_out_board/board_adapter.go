@@ -3,7 +3,7 @@ package player_adapter_out_board
 import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_adapter/in/board_adapter_in_player"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_adapter_port_out"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
 	"github.com/pkg/errors"
 )
 
@@ -19,13 +19,13 @@ func New(boardPlayerAdapter board_adapter_in_player.IBoardPlayerAdapter) player_
 	}
 }
 
-func (pba *playerBoardAdapter) GetBoardState() ([3][3]player_domain.State, error) {
+func (pba *playerBoardAdapter) GetBoardState() ([3][3]shared.State, error) {
 	b, err := pba.boardPlayerAdapter.GetBoardState()
-	newB := [3][3]player_domain.State{}
+	newB := [3][3]shared.State{}
 
 	for i := range b {
 		for j := range b[i] {
-			newB[i][j] = player_domain.State(b[i][j])
+			newB[i][j] = shared.State(b[i][j])
 		}
 	}
 
@@ -42,7 +42,7 @@ func (pba *playerBoardAdapter) ResetBoard() error {
 	return errors.Wrap(err, errInHere.Error())
 }
 
-func (pba *playerBoardAdapter) WhoWin() (player_domain.State, error) {
+func (pba *playerBoardAdapter) WhoWin() (shared.State, error) {
 	ds, err := pba.boardPlayerAdapter.WhoWin()
-	return player_domain.State(ds), errors.Wrap(err, errInHere.Error())
+	return shared.State(ds), errors.Wrap(err, errInHere.Error())
 }

@@ -3,7 +3,7 @@ package player_application
 import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_adapter_port_out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_application_port_in"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
 	"github.com/pkg/errors"
 )
 
@@ -17,7 +17,7 @@ func NewWhoWinUseCase(boardPort player_adapter_port_out.IBoardAdapter) player_ap
 	}
 }
 
-func (w *whoWinUseCase) WhoWin() (player_domain.State, error) {
+func (w *whoWinUseCase) WhoWin() (shared.State, error) {
 	ds, err := w.boardPort.WhoWin()
 	return ds, errors.Wrap(err, errInHere.Error())
 }

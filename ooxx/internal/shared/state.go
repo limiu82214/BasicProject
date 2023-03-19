@@ -1,4 +1,4 @@
-package player_domain
+package shared
 
 type State int
 

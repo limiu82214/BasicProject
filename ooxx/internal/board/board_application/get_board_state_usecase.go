@@ -4,6 +4,7 @@ import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
 	"github.com/pkg/errors"
 )
 
@@ -19,13 +20,13 @@ func NewGetBoardStateUseCase(
 	}
 }
 
-func (g *getBoardStateUseCase) GetBoardState() ([3][3]board_domain.State, error) {
+func (g *getBoardStateUseCase) GetBoardState() ([3][3]shared.State, error) {
 	board, err := g.loadBoardPort.GetBoard()
 	if err != nil {
 		if errors.Is(err, board_domain.ErrGetEmpty) {
 			board = board_domain.NewBoard()
 		} else {
-			return [3][3]board_domain.State{}, errors.Wrap(err, "in service resetBoardState")
+			return [3][3]shared.State{}, errors.Wrap(err, "in service resetBoardState")
 		}
 	}
 

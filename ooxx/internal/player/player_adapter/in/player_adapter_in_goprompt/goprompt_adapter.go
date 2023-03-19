@@ -8,7 +8,7 @@ import (
 
 	"github.com/c-bata/go-prompt"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_application/port/player_application_port_in"
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
 	"github.com/limiu82214/GoBasicProject/ooxx/pkg/nerror"
 )
 
@@ -114,7 +114,7 @@ func (bpa *playerGopromptAdapter) PutChess() {
 		return
 	}
 
-	ss := player_domain.State(s)
+	ss := shared.State(s)
 
 	ssc, err := player_application_port_in.NewPutChessCmd(nickname, x, y, ss)
 	if err != nil {
@@ -137,7 +137,7 @@ func (bpa *playerGopromptAdapter) WhoWin() {
 		return
 	}
 
-	if winner == player_domain.Blank {
+	if winner == shared.Blank {
 		log.Print("sys: nobody win")
 	} else {
 		log.Printf("sys: winner is %d", winner)

@@ -3,7 +3,7 @@ package player_application_port_in
 import (
 	"github.com/pkg/errors"
 
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/player/player_domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
 )
 
 type PutChessCmd struct {
@@ -12,13 +12,13 @@ type PutChessCmd struct {
 	Nickname string
 	X        int
 	Y        int
-	S        player_domain.State
+	S        shared.State
 }
 
 var errOutOfRange = errors.New("must 0~2")
 var errNicknameErr = errors.New("nickname error")
 
-func NewPutChessCmd(nickname string, x, y int, s player_domain.State) (*PutChessCmd, error) {
+func NewPutChessCmd(nickname string, x, y int, s shared.State) (*PutChessCmd, error) {
 	l := len(nickname)
 	if l < 1 || l > 3 {
 		return nil, errNicknameErr
@@ -32,7 +32,7 @@ func NewPutChessCmd(nickname string, x, y int, s player_domain.State) (*PutChess
 		return nil, errOutOfRange
 	}
 
-	if s < player_domain.Blank || s > player_domain.X {
+	if s < shared.Blank || s > shared.Blank {
 		return nil, errOutOfRange
 	}
 

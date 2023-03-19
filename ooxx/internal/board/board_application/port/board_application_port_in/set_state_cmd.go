@@ -3,7 +3,7 @@ package board_application_port_in
 import (
 	"github.com/pkg/errors"
 
-	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
 )
 
 type SetStateCmd struct {
@@ -11,12 +11,12 @@ type SetStateCmd struct {
 
 	X int
 	Y int
-	S board_domain.State
+	S shared.State
 }
 
 var errOutOfRange = errors.New("must 0~2")
 
-func NewSetStateCmd(x, y int, s board_domain.State) (*SetStateCmd, error) {
+func NewSetStateCmd(x, y int, s shared.State) (*SetStateCmd, error) {
 	if x < 0 || x > 2 {
 		return nil, errOutOfRange
 	}
@@ -25,7 +25,7 @@ func NewSetStateCmd(x, y int, s board_domain.State) (*SetStateCmd, error) {
 		return nil, errOutOfRange
 	}
 
-	if s < board_domain.Blank || s > board_domain.X {
+	if s < shared.Blank || s > shared.Blank {
 		return nil, errOutOfRange
 	}
 

@@ -4,6 +4,7 @@ import (
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_in"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_application/port/board_application_port_out"
 	"github.com/limiu82214/GoBasicProject/ooxx/internal/board/board_domain"
+	"github.com/limiu82214/GoBasicProject/ooxx/internal/shared"
 	"github.com/pkg/errors"
 )
 
@@ -19,13 +20,13 @@ func NewWhoWinUseCase(
 	}
 }
 
-func (w *whoWinUseCase) WhoWin() (board_domain.State, error) {
+func (w *whoWinUseCase) WhoWin() (shared.State, error) {
 	board, err := w.loadBoardPort.GetBoard()
 	if err != nil {
 		if errors.Is(err, board_domain.ErrGetEmpty) {
 			board = board_domain.NewBoard()
 		} else {
-			return board_domain.Blank, errors.Wrap(err, "in service WhoWin")
+			return shared.Blank, errors.Wrap(err, "in service WhoWin")
 		}
 	}
 
